@@ -7,7 +7,7 @@ export default function Home() {
     return (
         <div>
             <Head>
-                <title>Create Next App</title>
+                <title>Hoop Spots 🏀📍</title>
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
             <Header isLoggedIn={false}/>
