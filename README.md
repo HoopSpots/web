@@ -1,30 +1,20 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Hoop Spots 🏀📍
 
-## Getting Started
+### Mission
+Find the best pickup basketball hoop sessions in real time using HoopSpots.
 
-First, run the development server:
+### Problem
+Finding consistent hoop sessions is hard.  The current solution is to either text everyone you know and asking the question ”Are you hooping?” or create a group chat with a bunch of hoopers which will almost 100% always fizzle out due to off topic conversations.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+### Solution
+HoopSpots will allow you to find available hoop sessions at a specific location. You can invite friends to a hoop session and see the hoopers on a map in real time (similar to Snapchat maps).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Technology
+#### API
+The API is built using Laravel, and can be found [here](https://github.com/HoopSpots/api)
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+#### Web
+The web application will be built with Next.js and is the repo you're currently looking at
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+#### Native
+The native application will be built with React Native at some point...
