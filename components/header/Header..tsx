@@ -22,7 +22,10 @@ export class Header extends Component<MyProps, MyState> {
                         <div className="-mr-2 -my-2 md:hidden">
                             <HamburgerButton/>
                         </div>
-                        <div className="flex items-center space-x-8">
+                        <div className="hidden md:flex-1 md:flex md:items-center md:justify-between md:space-x-12">
+
+                        </div>
+                        <div className="items-center space-x-8 hidden md:flex">
                             <HeaderButton text="Sign In" to="#" type="secondary"/>
                             <div className="inline-flex rounded-md shadow-sm">
                                 <HeaderButton text="Sign Up" to="#" type="primary"/>

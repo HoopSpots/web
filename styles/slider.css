@@ -1,0 +1,7 @@
+.slick-track {
+    @apply flex;
+}
+
+.slick-slide {
+    @apply h-auto flex justify-center mb-1;
+}
