@@ -2,7 +2,9 @@ import Head from 'next/head'
 import {Header} from '../components/header/Header.';
 import {LandingHero} from '../components/section/LandingHero.';
 import React from 'react';
-import {HoopSpotCardSlider} from '../components/slider/HoopSpotCardSlider';
+import {HoopSpotSlider} from '../components/slider/HoopSpotSlider';
+import {HoopSessionSlider} from '../components/slider/HoopSessionSlider';
+import {Footer} from '../components/footer/Footer';
 
 function Home() {
     return (
@@ -15,7 +17,9 @@ function Home() {
             </Head>
             <Header isLoggedIn={false}/>
             <LandingHero/>
-            <HoopSpotCardSlider/>
+            <HoopSpotSlider/>
+            <HoopSessionSlider/>
+            <Footer/>
         </div>
     )
 }

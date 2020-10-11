@@ -9,7 +9,7 @@ type MyState = {};
 export class HoopSpotCard extends Component<MyProps, MyState> {
     render() {
         return (
-            <div key={this.props.hoopSpot.id}
+            <div key={this.props.hoopSpot.uuid}
                  className="h-full flex flex-col border max-w-sm rounded-tl-4xl rounded-br-5xl relative focus:outline-none mx-1 cursor-pointer">
                 <div className="w-full h-56 sm:h-64 bg-cover bg-center rounded rounded-tl-4xl"
                      style={{backgroundImage: `url(${this.props.hoopSpot.image})`}}/>
@@ -43,7 +43,7 @@ export class HoopSpotCard extends Component<MyProps, MyState> {
                                 ))}
                             </div>
                             <div className="flex-1 font-base text-gray-600 text-sm">
-                                {this.props.hoopSpot.members?.length}
+                                {this.props.hoopSpot.members?.length} members
                             </div>
                         </div>
 

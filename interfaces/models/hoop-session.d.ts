@@ -8,5 +8,6 @@ type HoopSession = {
 	updated_at: string /* Date */ | null
 	hoopspot?: HoopSpot|null
 	members?: User[]|null
-	status?: any
+	status?: any;
+	distance_away?: number;
 };

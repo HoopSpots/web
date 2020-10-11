@@ -3,6 +3,10 @@ import axios, {AxiosResponse} from 'axios';
 import {ResponseFactory} from '../interfaces/ResponseFactory';
 
 export class RestService {
+
+    /**
+     * Make a client side HTTP Request to the Hoop Spots API
+     */
     async makeHttpRequest<T>(
         url: string,
         method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
@@ -10,9 +14,7 @@ export class RestService {
         params?: any
     ) {
         const { database } = new DatabaseService();
-        await database.set('token', '2|PMOfKTApnkn7ZeIvzRimrZfK553XMjdMIzuTUb2e');
         const token = await database.get('token');
-        console.log(token);
 
         const options = {
             headers: {
