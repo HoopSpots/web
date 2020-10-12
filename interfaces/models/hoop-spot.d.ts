@@ -17,4 +17,5 @@ type HoopSpot = {
 	image?: string;
 	distance_away?: number;
 	members_count?: number;
+	full_address?: string;
 };

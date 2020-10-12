@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {HamburgerButton} from '../button/HamburgerButton.';
 import {HeaderButton} from '../button/HeaderButton.';
+import Link from 'next/link';
 
 type MyProps = {
     isLoggedIn: boolean
@@ -15,9 +16,11 @@ export class Header extends Component<MyProps, MyState> {
                     <div
                         className="max-w-7xl mx-auto flex justify-between items-center px-4 py-5 sm:px-6 sm:py-4 lg:px-8 md:justify-start md:space-x-10">
                         <div>
-                            <a href="/" className="flex text-primary text-2xl font-base">
-                                HoopSpots 🏀📍
-                            </a>
+                            <Link href="/">
+                                <span className="flex text-primary text-2xl font-base cursor-pointer">
+                                    HoopSpots 🏀📍
+                                </span>
+                            </Link>
                         </div>
                         <div className="-mr-2 -my-2 md:hidden">
                             <HamburgerButton/>
