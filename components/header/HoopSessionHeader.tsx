@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 
-type MyProps = {
+type HoopSessionHeaderProps = {
     hoopSession: HoopSession;
 };
 
 dayjs.extend(localizedFormat);
 
-export class HoopSessionHeader extends Component<MyProps> {
+export class HoopSessionHeader extends Component<HoopSessionHeaderProps> {
     render() {
         return (
             <div className="lg:flex lg:items-center lg:justify-between">

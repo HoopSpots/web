@@ -50,4 +50,9 @@ export class RestService {
         }
     }
 
+    async isLoggedIn(): Promise<boolean> {
+        return this.makeHttpRequest(`validate`, `GET`).then((res: ResponseFactory<{valid: boolean}>) => {
+            return res.data.valid;
+        })
+    }
 }

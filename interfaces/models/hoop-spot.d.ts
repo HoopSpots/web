@@ -2,6 +2,7 @@ type HoopSpot = {
 	id: number
 	uuid: string
 	name: string
+	slug: string | null
 	description: string | null
 	hoop_spot_type: string
 	street_address: string
@@ -14,8 +15,7 @@ type HoopSpot = {
 	updated_at: string /* Date */ | null
 	hoop_sessions?: HoopSession[]|null
 	members?: User[]|null
-	image?: string;
-	distance_away?: number;
-	members_count?: number;
-	full_address?: string;
+	image?: string
+	full_address?: string
+	distance_away?: number
 };

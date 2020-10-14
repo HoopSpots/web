@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
 
-type MyProps = {
+type HoopSpotHeaderProps = {
     hoopSpot: HoopSpot;
 };
 
-export class HoopSpotHeader extends Component<MyProps> {
+export class HoopSpotHeader extends Component<HoopSpotHeaderProps> {
     render() {
         return (
             <div className="lg:flex lg:items-center lg:justify-between">
                 <div className="flex-1 min-w-0">
-                    <h4 className="text-lg font-semibold leading-5 text-primary mb-1">{this.props.hoopSpot.hoop_sessions?.length} HoopSessions</h4>
                     <h2 className="text-3xl md:text-4xl font-black tracking-wide">
                         {this.props.hoopSpot.name}
                     </h2>

@@ -20,6 +20,7 @@
     "google-map-react": "^2.1.7",
     "idb": "^5.0.7",
     "next": "9.5.4",
+    "notyf": "^3.9.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-slick": "^0.27.11",
