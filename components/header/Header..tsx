@@ -30,13 +30,13 @@ export class Header extends Component<MyProps, MyState> {
                         </div>
                         <div className="items-center space-x-8 hidden md:flex">
                             {!this.props.isLoggedIn ? (
-                                <div>
-                                    <HeaderButton text="Sign In" to="#" type="secondary"/>
-                                    <div className="inline-flex rounded-md shadow-sm">
-                                        <HeaderButton text="Sign Up" to="#" type="primary"/>
-                                    </div>
-                                </div>
-                            ) : null}
+                                <HeaderButton text="Sign In" to="#" type="secondary"/>
+                            ): null}
+                            <div className="inline-flex rounded-md shadow-sm">
+                                {!this.props.isLoggedIn ? (
+                                    <HeaderButton text="Sign Up" to="#" type="primary"/>
+                                ): null}
+                            </div>
                         </div>
                     </div>
                 </div>
