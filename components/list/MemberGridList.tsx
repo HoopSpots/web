@@ -5,7 +5,7 @@ type MyProps = {
 };
 type MyState = {};
 
-export class MemberList extends Component<MyProps, MyState>{
+export class MemberGridList extends Component<MyProps, MyState>{
     render() {
         // Cap the members to a grid list of 12
         return (

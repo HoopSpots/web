@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {HoopSessionHeader} from '../header/HoopSessionHeader';
-import {MemberList} from '../list/MemberList';
+import {MemberGridList} from '../list/MemberGridList';
 
 type MyProps = {
     // @ts-ignore
@@ -34,7 +34,7 @@ export class HoopSessionSection extends Component<MyProps, MyState>{
                         </div>
 
                         {/*@ts-ignore*/}
-                        <MemberList members={this.props.hoopSession.members}/>
+                        <MemberGridList members={this.props.hoopSession.members}/>
                     </div>
                 </div>
             </section>

@@ -1,4 +1,5 @@
 type User = {
+	pivot: any;
 	id: number
 	uuid: string
 	name: string
