@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {SortMemberEnum} from '../../interfaces/SortMemberEnum';
+import {SortMemberEnum} from '../../interfaces/enums/SortMemberEnum';
 
 type SortMemberDropdownProps = {
     selectSortOption: (sort: SortMemberEnum.joined | SortMemberEnum.alphabetical) => void;

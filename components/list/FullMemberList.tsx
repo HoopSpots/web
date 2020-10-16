@@ -3,13 +3,17 @@ import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 type FullMemberListProps = {
-    members: User[] | null | undefined
+    members: User[] | null | undefined;
+}
+
+type FullMemberListState = {
+
 }
 
 dayjs.extend(localizedFormat);
 
 
-export class FullMemberList extends Component<FullMemberListProps> {
+export class FullMemberList extends Component<FullMemberListProps, FullMemberListState> {
     constructor(props: FullMemberListProps) {
         super(props);
     }
