@@ -25,13 +25,13 @@ export class FullMemberList extends Component<FullMemberListProps, FullMemberLis
                     this.props.members?.map(member => (
                         <li className="flex items-center justify-between py-2" key={member.name}>
                             <div className="flex">
-                                <img className="w-10 h-10 rounded-full"
+                                <img className="w-8 h-8 md:w-10 md:h-10 rounded-full"
                                      src={member.avatar} alt={member.uuid}/>
-                                <h3 className="text-lg leading-10 font-medium ml-2 text-gray-800">
+                                <h3 className="text-md md:text-lg leading-10 font-medium ml-2 text-gray-800">
                                     {member.name}
                                 </h3>
                             </div>
-                            <p className="text-gray-500 text-sm">{dayjs(member.pivot.joined_on).format('lll')}</p>
+                            <p className="text-gray-500 text-xs md:text-sm">{dayjs(member.pivot.joined_on).format('lll')}</p>
                         </li>
                     ))
                 }

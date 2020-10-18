@@ -14,7 +14,7 @@ export class HoopSessionCard extends Component<MyProps, MyState> {
     render() {
         return (
             <Link href={`/hoopsession/${this.props.hoopSession.uuid}`}>
-                <a>
+                <a href={`/hoopsession/${this.props.hoopSession.uuid}`}>
                     <div
                         className="h-full flex flex-col border max-w-sm rounded-tl-4xl rounded-br-5xl relative focus:outline-none mx-1">
                         <div className="w-full h-56 sm:h-64 bg-cover bg-center rounded rounded-tl-4xl"

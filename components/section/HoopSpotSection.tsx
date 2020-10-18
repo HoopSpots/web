@@ -4,6 +4,10 @@ import {HoopSpotTabEnum} from '../../interfaces/enums/HoopSpotTabEnum';
 import {HoopSpotTab} from '../tab/HoopSpotTab';
 import {FullMemberList} from '../list/FullMemberList';
 import {SortMemberDropdown} from '../dropdown/SortMemberDropdown';
+import {FullHoopSessionsList} from '../list/FullHoopSessionsList';
+import {DateFilterEnum} from '../../interfaces/enums/DateFilterEnum';
+import dayjs from 'dayjs';
+import CommentList from '../list/CommentList';
 
 type HoopSpotSectionProps = {
     hoopSpot: HoopSpot
@@ -15,6 +19,7 @@ type HoopSpotSectionState = {
     showDropdown: boolean;
     selectedTab: HoopSpotTabEnum.discussions | HoopSpotTabEnum.members | HoopSpotTabEnum.sessions;
     members: User[] | null | undefined;
+    filterSessionsByDate: DateFilterEnum.past | DateFilterEnum.upcoming;
 }
 
 export class HoopSpotSection extends Component<HoopSpotSectionProps, HoopSpotSectionState> {
@@ -25,7 +30,8 @@ export class HoopSpotSection extends Component<HoopSpotSectionProps, HoopSpotSec
             searchInput: undefined,
             showDropdown: false,
             selectedTab: HoopSpotTabEnum.members, // default
-            members: this.props.hoopSpot.members
+            members: this.props.hoopSpot.members,
+            filterSessionsByDate: DateFilterEnum.upcoming
         }
         this.selectTab = this.selectTab.bind(this);
     }
@@ -35,7 +41,6 @@ export class HoopSpotSection extends Component<HoopSpotSectionProps, HoopSpotSec
     };
 
     selectTab = (tab: HoopSpotTabEnum.discussions | HoopSpotTabEnum.members | HoopSpotTabEnum.sessions) => {
-        console.log(tab);
         this.setState({selectedTab: tab});
     };
 
@@ -44,13 +49,80 @@ export class HoopSpotSection extends Component<HoopSpotSectionProps, HoopSpotSec
             return this.state.members;
         }
 
-        return this.state.members?.filter(data => {
+        return this.state.members?.filter(member => {
             if (this.state.searchInput === undefined) {
-                return data;
-            } else if (data.name.toLowerCase().includes(this.state.searchInput.toLowerCase()) || data.email.toLowerCase().includes(this.state.searchInput.toLowerCase())) {
-                return data
+                return member;
+            } else if (member.name.toLowerCase().includes(this.state.searchInput.toLowerCase()) || member.email.toLowerCase().includes(this.state.searchInput.toLowerCase())) {
+                return member
             }
         });
+    }
+
+    filterSessions() {
+        return this.props.hoopSpot.hoop_sessions?.filter(hoopSession => {
+            if (this.state.filterSessionsByDate === DateFilterEnum.past) {
+                return dayjs().isAfter(dayjs(hoopSession.end_time))
+            }
+
+            return dayjs().isBefore(dayjs(hoopSession.end_time));
+        })
+    }
+
+    getMemberContainer() {
+        return (
+            <div className="bg-white rounded-md shadow-md py-8 px-4 w-full md:max-w-4xl mx-auto">
+                <div className="flex justify-between relative">
+                    <h3 className="font-medium tracking-wide text-2xl text-gray-800 inline-flex items-center">
+                        Members
+                    </h3>
+                    <button
+                        onClick={() => this.setState({showDropdown: !this.state.showDropdown})}
+                        className="font-base inline-flex tracking-wide text-sm focus:outline-none text-gray-600">
+                        <svg className="w-6 h-6 mr-1" fill="currentColor" viewBox="0 0 20 20"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M3 3a1 1 0 000 2h11a1 1 0 100-2H3zM3 7a1 1 0 000 2h7a1 1 0 100-2H3zM3 11a1 1 0 100 2h4a1 1 0 100-2H3zM15 8a1 1 0 10-2 0v5.586l-1.293-1.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L15 13.586V8z"/>
+                        </svg>
+                        Sort
+                    </button>
+                    <SortMemberDropdown selectSortOption={this.selectSortMember}
+                                        showDropdown={this.state.showDropdown}/>
+                </div>
+                <div className="flex border-b">
+                    <input id="email"
+                           onChange={event => this.setState({searchInput: event.target.value})}
+                           className="form-input block w-full my-4 px-2 py-3 text-md sm:leading-5 border-gray-100 rounded-lg shadow-md border-2 focus:outline-none"
+                           placeholder="Search for Members"/>
+                </div>
+                <FullMemberList members={this.searchMembers()}/>
+            </div>
+        )
+    }
+
+    getSessionsContainer() {
+        return (
+            <div className="md:max-w-6xl">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="hidden md:block col-span-1">
+                        <nav className="bg-white shadow rounded-lg border-gray-50">
+                            <span
+                                onClick={() => this.setState({filterSessionsByDate: DateFilterEnum.upcoming})}
+                                className={`cursor-pointer rounded-t group flex items-center px-3 py-2 leading-5 focus:outline-none transition ease-in-out duration-150  ${this.state.filterSessionsByDate === DateFilterEnum.upcoming ? 'border-r-4 border-primary text-md font-semibold text-primary': 'text-sm font-medium text-gray-900 hover:text-gray-600'}`}>
+                                Upcoming
+                            </span>
+                            <span
+                                onClick={() => this.setState({filterSessionsByDate: DateFilterEnum.past})}
+                                className={`cursor-pointer rounded-t group flex items-center px-3 py-2 leading-5 focus:outline-none transition ease-in-out duration-150  ${this.state.filterSessionsByDate === DateFilterEnum.past ? 'border-r-4 border-primary text-md font-semibold text-primary': 'text-sm font-medium text-gray-900 hover:text-gray-600'}`}>
+                                Past
+                            </span>
+                        </nav>
+                    </div>
+                    <div className="col-span-2">
+                        <FullHoopSessionsList hoopSessions={this.filterSessions()}/>
+                    </div>
+                </div>
+            </div>
+        );
     }
 
 
@@ -58,7 +130,7 @@ export class HoopSpotSection extends Component<HoopSpotSectionProps, HoopSpotSec
         return (
             <section className="md:py-16 md:my-0 bg-accent h-full">
                 <div className="container mx-auto py-8 px-4 md:px-0">
-                    <div className="grid md:grid-cols-5 md:gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-5 md:gap-6">
                         <div className="col-span-3">
                             <img className="rounded-lg shadow-md w-full"
                                  alt={this.props.hoopSpot.name}
@@ -172,46 +244,21 @@ export class HoopSpotSection extends Component<HoopSpotSectionProps, HoopSpotSec
                     {
                         // Show Members
                         this.state.selectedTab === HoopSpotTabEnum.members ? (
-                            <div className="bg-white rounded-md shadow-md py-8 px-4 w-full md:max-w-4xl mx-auto">
-                                <div className="flex justify-between relative">
-                                    <h3 className="font-medium tracking-wide text-2xl text-gray-800 inline-flex items-center">
-                                        Members
-                                    </h3>
-                                    <button
-                                        onClick={() => this.setState({showDropdown: !this.state.showDropdown})}
-                                        className="font-base inline-flex tracking-wide text-sm focus:outline-none text-gray-600">
-                                        <svg className="w-6 h-6 mr-1" fill="currentColor" viewBox="0 0 20 20"
-                                             xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M3 3a1 1 0 000 2h11a1 1 0 100-2H3zM3 7a1 1 0 000 2h7a1 1 0 100-2H3zM3 11a1 1 0 100 2h4a1 1 0 100-2H3zM15 8a1 1 0 10-2 0v5.586l-1.293-1.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L15 13.586V8z"/>
-                                        </svg>
-                                        Sort
-                                    </button>
-                                    <SortMemberDropdown selectSortOption={this.selectSortMember}
-                                                        showDropdown={this.state.showDropdown}/>
-                                </div>
-                                <div className="flex border-b">
-                                    <input id="email"
-                                           onChange={event => this.setState({searchInput: event.target.value})}
-                                           className="form-input block w-full my-4 px-2 py-3 text-md sm:leading-5 border-gray-100 rounded-lg shadow-md border-2 focus:outline-none"
-                                           placeholder="Search for Members"/>
-                                </div>
-                                <FullMemberList members={this.searchMembers()}/>
-                            </div>
+                            this.getMemberContainer()
                         ) : null
                     }
 
                     {
                         // Show sessions
                         this.state.selectedTab === HoopSpotTabEnum.sessions ? (
-                            <nav className="bg-white shadow rounded-lg border-gray-50">
-                                <a href="#" className={`rounded-t group flex items-center px-3 py-2 leading-5 focus:outline-none transition ease-in-out duration-150 ${1 ? 'border-r-4 border-primary text-md font-semibold text-primary': 'text-sm font-medium text-gray-900 hover:text-primary'}`}>
-                                    List
-                                </a>
-                                <a href="#" className={`rounded-t group flex items-center px-3 py-2 leading-5 focus:outline-none transition ease-in-out duration-150 ${0 ? 'border-r-4 border-primary text-md font-semibold text-primary': 'text-sm font-medium text-gray-900 hover:text-gray-600'}`}>
-                                    Calendar
-                                </a>
-                            </nav>
+                            this.getSessionsContainer()
+                        ): null
+                    }
+
+                    {
+                        // Show discussion
+                        this.state.selectedTab === HoopSpotTabEnum.discussions ? (
+                            <CommentList hoopSpot={this.props.hoopSpot}/>
                         ): null
                     }
                 </div>

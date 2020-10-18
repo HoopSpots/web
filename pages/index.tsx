@@ -2,7 +2,7 @@ import Head from 'next/head'
 import {LandingHero} from '../components/section/LandingHero.';
 import React from 'react';
 import {HoopSpotSlider} from '../components/slider/HoopSpotSlider';
-import {HoopSessionSlider} from '../components/slider/HoopSessionSlider';
+import HoopSessionSlider from '../components/slider/HoopSessionSlider';
 import {Layout} from '../components/layout/Layout';
 
 function Home() {

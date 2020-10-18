@@ -18,4 +18,5 @@ type HoopSpot = {
 	image?: string
 	full_address?: string
 	distance_away?: number
+	comments?: Commentable[];
 };
