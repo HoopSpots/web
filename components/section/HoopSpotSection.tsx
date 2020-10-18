@@ -58,6 +58,14 @@ export class HoopSpotSection extends Component<HoopSpotSectionProps, HoopSpotSec
         });
     }
 
+    getFBShareLink() {
+        return `https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`
+    }
+
+    getTwitterShareLink() {
+        return `https://twitter.com/share?url=${window.location.href}`
+    }
+
     filterSessions() {
         return this.props.hoopSpot.hoop_sessions?.filter(hoopSession => {
             if (this.state.filterSessionsByDate === DateFilterEnum.past) {
@@ -107,12 +115,12 @@ export class HoopSpotSection extends Component<HoopSpotSectionProps, HoopSpotSec
                         <nav className="bg-white shadow rounded-lg border-gray-50">
                             <span
                                 onClick={() => this.setState({filterSessionsByDate: DateFilterEnum.upcoming})}
-                                className={`cursor-pointer rounded-t group flex items-center px-3 py-2 leading-5 focus:outline-none transition ease-in-out duration-150  ${this.state.filterSessionsByDate === DateFilterEnum.upcoming ? 'border-r-4 border-primary text-md font-semibold text-primary': 'text-sm font-medium text-gray-900 hover:text-gray-600'}`}>
+                                className={`cursor-pointer rounded-t group flex items-center px-3 py-2 leading-5 focus:outline-none transition ease-in-out duration-150  ${this.state.filterSessionsByDate === DateFilterEnum.upcoming ? 'border-r-4 border-primary text-md font-semibold text-primary' : 'text-sm font-medium text-gray-900 hover:text-gray-600'}`}>
                                 Upcoming
                             </span>
                             <span
                                 onClick={() => this.setState({filterSessionsByDate: DateFilterEnum.past})}
-                                className={`cursor-pointer rounded-t group flex items-center px-3 py-2 leading-5 focus:outline-none transition ease-in-out duration-150  ${this.state.filterSessionsByDate === DateFilterEnum.past ? 'border-r-4 border-primary text-md font-semibold text-primary': 'text-sm font-medium text-gray-900 hover:text-gray-600'}`}>
+                                className={`cursor-pointer rounded-t group flex items-center px-3 py-2 leading-5 focus:outline-none transition ease-in-out duration-150  ${this.state.filterSessionsByDate === DateFilterEnum.past ? 'border-r-4 border-primary text-md font-semibold text-primary' : 'text-sm font-medium text-gray-900 hover:text-gray-600'}`}>
                                 Past
                             </span>
                         </nav>
@@ -161,32 +169,44 @@ export class HoopSpotSection extends Component<HoopSpotSectionProps, HoopSpotSec
 
                                 <span className="flex md:hidden font-semibold">
                                     Share:
-                                    <svg className="w-5 h-5 mx-1 text-gray-600" fill="currentColor" viewBox="0 0 50 50"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M40,0H10C4.486,0,0,4.486,0,10v30c0,5.514,4.486,10,10,10h30c5.514,0,10-4.486,10-10V10C50,4.486,45.514,0,40,0z M39,17h-3 c-2.145,0-3,0.504-3,2v3h6l-1,6h-5v20h-7V28h-3v-6h3v-3c0-4.677,1.581-8,7-8c2.902,0,6,1,6,1V17z"/>
-                                    </svg>
-                                    <svg className="w-5 h-5 mx-1 text-gray-600" fill="currentColor" viewBox="0 0 24 24"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                                    </svg>
+                                    <a href={this.getFBShareLink()} target="_blank">
+                                        <svg className="w-5 h-5 mx-1 text-gray-600" fill="currentColor"
+                                             viewBox="0 0 50 50"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M40,0H10C4.486,0,0,4.486,0,10v30c0,5.514,4.486,10,10,10h30c5.514,0,10-4.486,10-10V10C50,4.486,45.514,0,40,0z M39,17h-3 c-2.145,0-3,0.504-3,2v3h6l-1,6h-5v20h-7V28h-3v-6h3v-3c0-4.677,1.581-8,7-8c2.902,0,6,1,6,1V17z"/>
+                                        </svg>
+                                    </a>
+                                    <a href={this.getTwitterShareLink()} target="_blank">
+                                        <svg className="w-5 h-5 mx-1 text-gray-600" fill="currentColor"
+                                             viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                                        </svg>
+                                    </a>
                                 </span>
                             </div>
 
                             <div className="md:block hidden absolute inset-x-0 bottom-0 font-semibold">
                                 <span className="flex items-center">
                                     Share:
-                                    <svg className="w-5 h-5 mx-1 text-gray-600" fill="currentColor" viewBox="0 0 50 50"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M40,0H10C4.486,0,0,4.486,0,10v30c0,5.514,4.486,10,10,10h30c5.514,0,10-4.486,10-10V10C50,4.486,45.514,0,40,0z M39,17h-3 c-2.145,0-3,0.504-3,2v3h6l-1,6h-5v20h-7V28h-3v-6h3v-3c0-4.677,1.581-8,7-8c2.902,0,6,1,6,1V17z"/>
-                                    </svg>
-                                    <svg className="w-5 h-5 mx-1 text-gray-600" fill="currentColor" viewBox="0 0 24 24"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                                    </svg>
+                                    <a href={this.getFBShareLink()} target="_blank">
+                                        <svg className="w-5 h-5 mx-1 text-gray-600" fill="currentColor"
+                                             viewBox="0 0 50 50"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M40,0H10C4.486,0,0,4.486,0,10v30c0,5.514,4.486,10,10,10h30c5.514,0,10-4.486,10-10V10C50,4.486,45.514,0,40,0z M39,17h-3 c-2.145,0-3,0.504-3,2v3h6l-1,6h-5v20h-7V28h-3v-6h3v-3c0-4.677,1.581-8,7-8c2.902,0,6,1,6,1V17z"/>
+                                        </svg>
+                                    </a>
+                                    <a href={this.getTwitterShareLink()} target="_blank">
+                                        <svg className="w-5 h-5 mx-1 text-gray-600" fill="currentColor"
+                                             viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                                        </svg>
+                                    </a>
                                 </span>
                             </div>
                         </div>
@@ -252,14 +272,14 @@ export class HoopSpotSection extends Component<HoopSpotSectionProps, HoopSpotSec
                         // Show sessions
                         this.state.selectedTab === HoopSpotTabEnum.sessions ? (
                             this.getSessionsContainer()
-                        ): null
+                        ) : null
                     }
 
                     {
                         // Show discussion
                         this.state.selectedTab === HoopSpotTabEnum.discussions ? (
                             <CommentList hoopSpot={this.props.hoopSpot}/>
-                        ): null
+                        ) : null
                     }
                 </div>
 
