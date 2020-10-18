@@ -4,16 +4,27 @@ import axios from 'axios';
 import {Layout} from '../../components/layout/Layout';
 import {HoopSpotSection} from '../../components/section/HoopSpotSection';
 
+type HoopSpotProps = {
+    hoopSpot: HoopSpot
+}
+
 // @ts-ignore
-function HoopSpot({ hoopSpot }) {
+function HoopSpot({ hoopSpot }: HoopSpotProps) {
+    const title = `${hoopSpot.name} | Hoop Spots 🏀📍`;
+    const description = `Join the ${hoopSpot.name} basketball group to find recurring pickup basketball games near ${hoopSpot.city}, ${hoopSpot.state}. `;
+
     return (
         <div>
             <Head>
-                <title>Hoop Spots 🏀📍</title>
+                <title>{hoopSpot.name} | Hoop Spots 🏀📍</title>
                 <link rel="icon" href="/favicon.ico"/>
-                <meta property="og:title" content="Hoop Spots 🏀📍" key="title"/>
-                <meta property="og:description" content="Hoop Spots allows you to find hoop sessions near you. 🏀📍"
-                      key="description"/>
+                <meta property="og:title" content={title} key="og-title"/>
+                <meta name='twitter:title' content={title} key="twitter-title"/>
+                <meta property="description" content={description} key="description"/>
+                <meta property="og:description" content={description} key="og-description"/>
+                <meta property="og:image" content={hoopSpot.image} key="og-image"/>
+                <meta property="twitter:image" content={hoopSpot.image} key="twitter-image"/>
+                <meta property='og:site_name' content="Hoop Spots 🏀📍" key="og-sitename"/>
             </Head>
             <Layout>
                 <HoopSpotSection hoopSpot={hoopSpot}/>
