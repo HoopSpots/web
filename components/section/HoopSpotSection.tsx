@@ -59,11 +59,15 @@ export class HoopSpotSection extends Component<HoopSpotSectionProps, HoopSpotSec
     }
 
     getFBShareLink() {
-        return `https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`
+        if (typeof(window) !== 'undefined') {
+            return `https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`;
+        }
     }
 
     getTwitterShareLink() {
-        return `https://twitter.com/share?url=${window.location.href}`
+        if (typeof(window) !== 'undefined') {
+            return `https://twitter.com/share?url=${window.location.href}`;
+        }
     }
 
     filterSessions() {
