@@ -5,7 +5,6 @@ import ProfileDropdown from '../dropdown/ProfileDropdown';
 import Link from 'next/link';
 
 
-
 const NavHeader: FunctionComponent = () => {
     const { user } = useContext(UserContext);
     const [showMobile, setShowMobile] = useState<boolean>(false);

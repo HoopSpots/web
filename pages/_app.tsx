@@ -2,13 +2,12 @@ import 'tailwindcss/tailwind.css'
 import '../styles/slider.css'
 import 'notyf/notyf.min.css';
 import App from 'next/app';
-import DatabaseService, { DBMethods } from '../services/DatabaseService';
+import DatabaseService, {DBMethods} from '../services/DatabaseService';
 import {LoginRequest} from '../interfaces/requests/LoginRequest';
 import axios from 'axios';
 import {LoginResponse} from '../interfaces/responses/LoginResponse';
 import {Notyf} from 'notyf';
 import {RestService} from '../services/RestService';
-import {ResponseFactory} from '../interfaces/ResponseFactory';
 import UserContext from '../components/context/UserContext'
 
 export default class MyApp extends App {
@@ -47,7 +46,8 @@ export default class MyApp extends App {
 
   signOut = () => {
     console.log('sign out');
-    this.restService.makeHttpRequest(`logout`, `POST`).then(async res => {
+    this.restService.makeHttpRequest(`logout`, `POST`).then(async (res) => {
+      console.log(res);
       this.notyf.success('You have been logged out.');
       await this.database.delete('token');
       await this.database.delete('user')
