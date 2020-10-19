@@ -2,7 +2,7 @@ import Head from 'next/head';
 import React from 'react';
 import axios from 'axios';
 import {Layout} from '../../components/layout/Layout';
-import {HoopSpotSection} from '../../components/section/HoopSpotSection';
+import HoopSpotSection from '../../components/section/HoopSpotSection';
 
 type HoopSpotProps = {
     hoopSpot: HoopSpot

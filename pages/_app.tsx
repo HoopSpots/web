@@ -38,7 +38,7 @@ export default class MyApp extends App {
           await this.database.set('user', response.user);
 
           // Push user to the next route
-          await this.props.router.push('/');
+          await this.props.router.push('/', undefined, {shallow: true});
         }).catch(error => {
       // Display an error notification
       this.notyf.error(error.response.data.message);
@@ -46,10 +46,11 @@ export default class MyApp extends App {
   };
 
   signOut = () => {
+    console.log('sign out');
     this.restService.makeHttpRequest(`logout`, `POST`).then(async res => {
-      const response: ResponseFactory<null> = res.data;
-      this.notyf.success(response.message);
-      this.database.clear();
+      this.notyf.success('You have been logged out.');
+      await this.database.delete('token');
+      await this.database.delete('user')
     })
   };
 
@@ -57,7 +58,7 @@ export default class MyApp extends App {
     const { Component, pageProps } = this.props;
 
     return (
-        <UserContext.Provider value={{user: this.state.user, signIn: this.signIn}}>
+        <UserContext.Provider value={{user: this.state.user, signIn: this.signIn, signOut: this.signOut}}>
           <Component {...pageProps} />
         </UserContext.Provider>
     );
