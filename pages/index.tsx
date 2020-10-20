@@ -6,13 +6,18 @@ import HoopSessionSlider from '../components/slider/HoopSessionSlider';
 import {Layout} from '../components/layout/Layout';
 
 function Home() {
+    const title = 'Hoop Spots 🏀📍';
+    const description = 'Find the best pickup basketball games with the Hoop Spots app. 🏀📍';
     return (
         <div>
             <Head>
                 <title>Hoop Spots 🏀📍</title>
                 <link rel="icon" href="/favicon.ico"/>
-                <meta property="og:title" content="Hoop Spots 🏀📍" key="title"/>
-                <meta property="og:description" content="Hoop Spots allows you to find hoop sessions near you. 🏀📍" key="description"/>
+                <meta property="og:title" content={title} key="og-title"/>
+                <meta name='twitter:title' content={title} key="twitter-title"/>
+                <meta property="description" content={description} key="description"/>
+                <meta property="og:description" content={description} key="og-description"/>
+                <meta property='og:site_name' content="Hoop Spots 🏀📍" key="og-sitename"/>
             </Head>
             <Layout>
                 <LandingHero/>
