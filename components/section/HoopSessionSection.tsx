@@ -3,7 +3,6 @@ import {HoopSessionHeader} from '../header/HoopSessionHeader';
 import {MemberGridList} from '../list/MemberGridList';
 
 type MyProps = {
-    // @ts-ignore
     hoopSession: HoopSession
 };
 type MyState = {

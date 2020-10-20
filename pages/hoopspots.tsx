@@ -10,7 +10,7 @@ function HoopSpots() {
     return (
         <div>
             <Head>
-                <title>Hoop Spots 🏀📍</title>
+                <title>{title}</title>
                 <link rel="icon" href="/favicon.ico"/>
                 <meta property="og:title" content={title} key="og-title"/>
                 <meta name='twitter:title' content={title} key="twitter-title"/>
