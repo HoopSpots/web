@@ -6,8 +6,9 @@ import {SectionHeading} from '../typography/SectionHeading';
 import {SliderButton} from '../button/SliderButton';
 import {HoopSessionCard} from '../card/HoopSessionCard';
 import {HoopSessionCardSkeleton} from '../skeleton/HoopSessionCardSkeleton';
+import { GeolocatedProps } from "react-geolocated";
 
-const HoopSessionSlider: FunctionComponent = () => {
+const HoopSessionSlider: FunctionComponent<GeolocatedProps> = (props) => {
     const restService: RestService = new RestService();
     const [hoopSessions, setHoopSessions] = useState<HoopSession[]>([]);
     const [sliderSettings] = useState({
@@ -30,9 +31,11 @@ const HoopSessionSlider: FunctionComponent = () => {
         ]
     });
     const [sliderRef, setSliderRef] = useState<Slider|null>(null);
-    useEffect(() =>{
+    useEffect(() => {
         if (hoopSessions.length === 0) {
-            restService.makeHttpRequest(`hoopsessions`, `GET`).then((res: ResponseFactory<HoopSession[]>) => {
+            const params = props.isGeolocationEnabled ? {lat: props.coords?.latitude, long: props.coords?.longitude}: undefined;
+            console.log(params);
+            restService.makeHttpRequest(`hoopsessions`, `GET`, params).then((res: ResponseFactory<HoopSession[]>) => {
                 setHoopSessions(res.data)
             }).catch(err => {
                 console.log('here is my error ' + err);
