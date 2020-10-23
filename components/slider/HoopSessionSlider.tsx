@@ -6,9 +6,9 @@ import {SectionHeading} from '../typography/SectionHeading';
 import {SliderButton} from '../button/SliderButton';
 import {HoopSessionCard} from '../card/HoopSessionCard';
 import {HoopSessionCardSkeleton} from '../skeleton/HoopSessionCardSkeleton';
-import { GeolocatedProps } from "react-geolocated";
+import { GeolocatedProps, geolocated } from "react-geolocated";
 
-const HoopSessionSlider: FunctionComponent<GeolocatedProps> = (props) => {
+const HoopSessionSlider: FunctionComponent = () => {
     const restService: RestService = new RestService();
     const [hoopSessions, setHoopSessions] = useState<HoopSession[]>([]);
     const [sliderSettings] = useState({
@@ -30,12 +30,25 @@ const HoopSessionSlider: FunctionComponent<GeolocatedProps> = (props) => {
             },
         ]
     });
+    const getPosition = (options?: PositionOptions): Promise<Position>  =>{
+        return new Promise((resolve, reject) =>
+            navigator.geolocation.getCurrentPosition(resolve, reject, options)
+        );
+    };
     const [sliderRef, setSliderRef] = useState<Slider|null>(null);
     useEffect(() => {
+        getPosition()
+            .then((position) => {
+                console.log(position);
+            })
+            .catch((err) => {
+                console.error(err.message);
+            });
+
+
+
         if (hoopSessions.length === 0) {
-            const params = props.isGeolocationEnabled ? {lat: props.coords?.latitude, long: props.coords?.longitude}: undefined;
-            console.log('params' + params);
-            restService.makeHttpRequest(`hoopsessions`, `GET`, null, params).then((res: ResponseFactory<HoopSession[]>) => {
+            restService.makeHttpRequest(`hoopsessions`, `GET`).then((res: ResponseFactory<HoopSession[]>) => {
                 setHoopSessions(res.data)
             }).catch(err => {
                 console.log('here is my error ' + err);
