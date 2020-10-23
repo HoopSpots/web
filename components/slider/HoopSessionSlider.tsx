@@ -49,11 +49,14 @@ const HoopSessionSlider: FunctionComponent = () => {
         if (hoopSessions.length === 0) {
             getPosition()
                 .then((position) => {
-                    // show hoop spots with geolocation enabled.
+                    // show hoop sessions with geolocation enabled.
                     getHoopSessions(position.coords);
+                }, err => {
+                    console.log(err);
+                    getHoopSessions();
                 })
                 .catch((err) => {
-                    // get hoop spots without geolocation if rejected.
+                    // get hoop sessions without geolocation if rejected.
                     getHoopSessions();
                     console.log(err);
                 });
