@@ -34,24 +34,29 @@ const HoopSessionSlider: FunctionComponent = () => {
             navigator.geolocation.getCurrentPosition(resolve, reject, options)
         );
     };
+
+    const getHoopSessions = (coords?: Coordinates) => {
+        const params = coords ? {lat: coords.latitude, long: coords.longitude}: undefined;
+        restService.makeHttpRequest(`hoopsessions`, `GET`, null, params).then((res: ResponseFactory<HoopSession[]>) => {
+            setHoopSessions(res.data)
+        }).catch(err => {
+            console.log('here is my error ' + err);
+        });
+    };
+
     const [sliderRef, setSliderRef] = useState<Slider|null>(null);
     useEffect(() => {
-        getPosition()
-            .then((position) => {
-                console.log(position);
-            })
-            .catch((err) => {
-                console.error(err.message);
-            });
-
-
-
         if (hoopSessions.length === 0) {
-            restService.makeHttpRequest(`hoopsessions`, `GET`).then((res: ResponseFactory<HoopSession[]>) => {
-                setHoopSessions(res.data)
-            }).catch(err => {
-                console.log('here is my error ' + err);
-            });
+            getPosition()
+                .then((position) => {
+                    // show hoop spots with geolocation enabled.
+                    getHoopSessions(position.coords);
+                })
+                .catch((err) => {
+                    // get hoop spots without geolocation if rejected.
+                    getHoopSessions();
+                    console.log(err);
+                });
         }
     });
 
