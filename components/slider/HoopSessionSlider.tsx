@@ -6,7 +6,6 @@ import {SectionHeading} from '../typography/SectionHeading';
 import {SliderButton} from '../button/SliderButton';
 import {HoopSessionCard} from '../card/HoopSessionCard';
 import {HoopSessionCardSkeleton} from '../skeleton/HoopSessionCardSkeleton';
-import { GeolocatedProps, geolocated } from "react-geolocated";
 
 const HoopSessionSlider: FunctionComponent = () => {
     const restService: RestService = new RestService();
