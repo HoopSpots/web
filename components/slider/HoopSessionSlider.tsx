@@ -34,8 +34,8 @@ const HoopSessionSlider: FunctionComponent<GeolocatedProps> = (props) => {
     useEffect(() => {
         if (hoopSessions.length === 0) {
             const params = props.isGeolocationEnabled ? {lat: props.coords?.latitude, long: props.coords?.longitude}: undefined;
-            console.log(params);
-            restService.makeHttpRequest(`hoopsessions`, `GET`, params).then((res: ResponseFactory<HoopSession[]>) => {
+            console.log('params' + params);
+            restService.makeHttpRequest(`hoopsessions`, `GET`, null, params).then((res: ResponseFactory<HoopSession[]>) => {
                 setHoopSessions(res.data)
             }).catch(err => {
                 console.log('here is my error ' + err);
