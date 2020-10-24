@@ -13,11 +13,10 @@ export class SortMemberDropdown extends Component<SortMemberDropdownProps, SortM
         super(props);
     }
 
-    select = (sort: SortMemberEnum.joined | SortMemberEnum.alphabetical) => {
-        console.log('i am in the member list');
+    select = (sort: SortMemberEnum.joined | SortMemberEnum.alphabetical) => {;
         // var lang = this.dropdown.value;
         this.props.selectSortOption(sort)
-    }
+    };
 
 
     render() {

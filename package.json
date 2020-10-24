@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "export HTTPS=true&&SSL_CRT_FILE=cert.pem&&SSL_KEY_FILE=key.pem&&next dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start"
   },
@@ -30,6 +30,19 @@
     "tailwindcss": "^1.8.12",
     "twin.macro": "^1.10.0",
     "typed-rest-client": "^1.7.3",
-    "typescript": "^4.0.3"
+    "typescript": "^4.0.3",
+    "cz-conventional-changelog": "^3.3.0",
+    "git-cz": "^4.7.1",
+    "husky": "^4.3.0"
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "git-cz"
+    }
   }
 }

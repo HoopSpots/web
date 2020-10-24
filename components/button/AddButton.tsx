@@ -8,7 +8,7 @@ const AddButton: FunctionComponent<AddButtonProps> = ({ children, onClick }) => 
     return (
         <button type="button"
                 onClick={onClick}
-                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-primary  focus:outline-none focus:shadow-outline-orange transition ease-in-out duration-150">
+                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-green-500  focus:outline-none focus:shadow-outline-green transition ease-in-out duration-150">
             {children}
             <svg className="-mr-0.5 ml-2 h-4 w-4" fill="currentColor"
                  viewBox="0 0 20 20"

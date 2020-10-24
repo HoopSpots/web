@@ -42,8 +42,8 @@ const HoopSpotSlider: FunctionComponent = () => {
         const params = coords ? {lat: coords.latitude, long: coords.longitude}: undefined;
         restService.makeHttpRequest(`hoopspots`, `GET`, null, params).then((res: ResponseFactory<HoopSpot[]>) => {
             setHoopSpots(res.data)
-        }).catch(err => {
-            console.log('here is my error ' + err);
+        }).catch(() => {
+
         });
     };
 
@@ -54,14 +54,12 @@ const HoopSpotSlider: FunctionComponent = () => {
                 .then((position) => {
                     // show hoop spots with geolocation enabled.
                     getHoopSpots(position.coords);
-                }, err => {
-                    console.log(err);
+                }, () => {
                     getHoopSpots();
                 })
-                .catch((err) => {
+                .catch(() => {
                     // get hoop spots without geolocation if rejected.
                     getHoopSpots();
-                    console.log(err);
                 });
         }
     });

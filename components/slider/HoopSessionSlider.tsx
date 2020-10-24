@@ -39,8 +39,6 @@ const HoopSessionSlider: FunctionComponent = () => {
         const params = coords ? {lat: coords.latitude, long: coords.longitude}: undefined;
         restService.makeHttpRequest(`hoopsessions`, `GET`, null, params).then((res: ResponseFactory<HoopSession[]>) => {
             setHoopSessions(res.data)
-        }).catch(err => {
-            console.log('here is my error ' + err);
         });
     };
 
@@ -51,14 +49,12 @@ const HoopSessionSlider: FunctionComponent = () => {
                 .then((position) => {
                     // show hoop sessions with geolocation enabled.
                     getHoopSessions(position.coords);
-                }, err => {
-                    console.log(err);
+                }, () => {
                     getHoopSessions();
                 })
-                .catch((err) => {
+                .catch(() => {
                     // get hoop sessions without geolocation if rejected.
                     getHoopSessions();
-                    console.log(err);
                 });
         }
     });

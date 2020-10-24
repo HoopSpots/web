@@ -13,7 +13,6 @@ const HoopSpotsGrid: FunctionComponent = () => {
     useEffect(() => {
         if (hoopSpots.length === 0) {
             restService.makeHttpRequest(`hoopspots`, `GET`).then((res: ResponseFactory<HoopSpot[]>) => {
-                console.log(res);
                 setHoopSpots(res.data);
             });
         }
@@ -30,7 +29,7 @@ const HoopSpotsGrid: FunctionComponent = () => {
                             </a>
                         </Link>
                     </div>
-                )): [...Array(6)].map((_i, index) => (
+                )): [...Array(12)].map((_i, index) => (
                     <HoopSpotColSkeleton key={index}/>
                 ))
             }

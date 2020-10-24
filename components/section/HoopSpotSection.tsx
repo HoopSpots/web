@@ -2,7 +2,7 @@ import React, {FunctionComponent, useContext, useEffect, useState} from 'react';
 import {SortMemberEnum} from '../../interfaces/enums/SortMemberEnum';
 import {HoopSpotTabEnum} from '../../interfaces/enums/HoopSpotTabEnum';
 import {HoopSpotTab} from '../tab/HoopSpotTab';
-import {FullMemberList} from '../list/FullMemberList';
+import FullMemberList from '../list/FullMemberList';
 import {SortMemberDropdown} from '../dropdown/SortMemberDropdown';
 import {FullHoopSessionsList} from '../list/FullHoopSessionsList';
 import {DateFilterEnum} from '../../interfaces/enums/DateFilterEnum';
@@ -14,13 +14,18 @@ import {RestService} from '../../services/RestService';
 import {ResponseFactory} from '../../interfaces/ResponseFactory';
 import {Notyf} from 'notyf';
 import {useRouter} from 'next/router';
+import {MemberListTypeEnum} from '../../interfaces/enums/MemberListTypeEnum';
+import LeaveButton from '../button/LeaveButton';
+import HoopSpotColSkeleton from '../skeleton/HoopSpotColSkeleton';
+import Link from 'next/link';
+import HoopSpotImageCard from '../card/HoopSpotImageCard';
 
 type HoopSpotSectionProps = {
     hoopSpot: HoopSpot
 }
 
 
-const HoopSpotSection: FunctionComponent<HoopSpotSectionProps> = (props: HoopSpotSectionProps) => {
+const HoopSpotSection: FunctionComponent<HoopSpotSectionProps> = (props) => {
     // const [sortBy, setSortBy] = useState<SortMemberEnum.alphabetical | SortMemberEnum.joined>(SortMemberEnum.alphabetical);
     const { user } = useContext(UserContext);
     const router = useRouter();
@@ -31,9 +36,14 @@ const HoopSpotSection: FunctionComponent<HoopSpotSectionProps> = (props: HoopSpo
     const [members] = useState<User[] | null | undefined>(props.hoopSpot.members);
     const [filterSessionsByDate, setFilterSessionsByDate] = useState<DateFilterEnum.past | DateFilterEnum.upcoming>(DateFilterEnum.upcoming);
     const [isMember, setIsMember] = useState<boolean|undefined>(undefined);
+    const [nearbyHoopSpots, setNearbyHoopSpots] = useState<HoopSpot[]>([]);
     useEffect(() => {
         if (isMember === undefined) {
             setIsMember(checkIfMember);
+        }
+
+        if (nearbyHoopSpots.length === 0) {
+            getNearbyHoopSpots();
         }
     });
 
@@ -55,6 +65,13 @@ const HoopSpotSection: FunctionComponent<HoopSpotSectionProps> = (props: HoopSpo
                 return member
             }
         });
+    };
+
+    const getNearbyHoopSpots = () => {
+        restService.makeHttpRequest(`hoopspot/${props.hoopSpot.slug}/nearby`, `GET`)
+            .then((res: ResponseFactory<HoopSpot[]>) => {
+                setNearbyHoopSpots(res.data);
+            });
     };
 
     const fbShareLink = () => {
@@ -90,10 +107,10 @@ const HoopSpotSection: FunctionComponent<HoopSpotSectionProps> = (props: HoopSpo
         }).length === 1;
     };
 
-    const joinHoopSession = async () => {
+    const joinHoopSpot = async () => {
         const notyf = new Notyf();
         if (user == null) {
-            await router.push('/login');
+            await router.push(`/login?ref=${encodeURIComponent(window.location.href)}`);
             return ;
         }
 
@@ -106,12 +123,27 @@ const HoopSpotSection: FunctionComponent<HoopSpotSectionProps> = (props: HoopSpo
         })
     };
 
+    const leaveHoopSpot = async () => {
+        const notyf = new Notyf();
+        if (user == null) {
+            await router.push(`/login?ref=${encodeURIComponent(window.location.href)}`);
+            return ;
+        }
+
+        restService.makeHttpRequest(`hoopspot/${props.hoopSpot.slug}/leave`, `POST`).then((res: ResponseFactory<null>) => {
+            setIsMember(false);
+            notyf.success(res.message);
+        }).catch(error => {
+            notyf.error(error.response.data.message)
+        })
+    };
+
     const getMemberContainer = () => {
         return (
             <div className="bg-white rounded-md shadow-md py-8 px-4 w-full md:max-w-4xl mx-auto">
                 <div className="flex justify-between relative">
                     <h3 className="font-medium tracking-wide text-2xl text-gray-800 inline-flex items-center">
-                        Members
+                        Members ({props.hoopSpot.members?.length})
                     </h3>
                     <button
                         onClick={() => setShowDropdown(!showDropdown)}
@@ -132,7 +164,7 @@ const HoopSpotSection: FunctionComponent<HoopSpotSectionProps> = (props: HoopSpo
                            className="form-input block w-full my-4 px-2 py-3 text-md sm:leading-5 border-gray-100 rounded-lg shadow-md border-2 focus:outline-none"
                            placeholder="Search for Members"/>
                 </div>
-                <FullMemberList members={searchMembers()}/>
+                <FullMemberList listType={MemberListTypeEnum.hoopspots} members={searchMembers()}/>
             </div>
         )
     };
@@ -248,9 +280,9 @@ const HoopSpotSection: FunctionComponent<HoopSpotSectionProps> = (props: HoopSpo
                                 <span className="inline-flex rounded-md shadow-sm">
                                     {
                                         isMember ? (
-                                            <AddButton onClick={() => console.log('add session')}>Add Session</AddButton>
+                                            <LeaveButton onClick={() => leaveHoopSpot()}>Leave</LeaveButton>
                                         ): (
-                                            <AddButton onClick={() => joinHoopSession()}>Join</AddButton>
+                                            <AddButton onClick={() => joinHoopSpot()}>Join</AddButton>
                                         )
                                     }
                                 </span>
@@ -285,26 +317,50 @@ const HoopSpotSection: FunctionComponent<HoopSpotSectionProps> = (props: HoopSpo
                 </div>
             </div>
             <div className="container mx-auto py-8 px-4 md:px-0">
-                {
-                    // Show Members
-                    selectedTab === HoopSpotTabEnum.members ? (
-                        getMemberContainer()
-                    ) : null
-                }
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div className="col-span-2">
+                        {
+                            // Show Members
+                            selectedTab === HoopSpotTabEnum.members ? (
+                                getMemberContainer()
+                            ) : null
+                        }
 
-                {
-                    // Show sessions
-                    selectedTab === HoopSpotTabEnum.sessions ? (
-                        getSessionsContainer()
-                    ) : null
-                }
+                        {
+                            // Show sessions
+                            selectedTab === HoopSpotTabEnum.sessions ? (
+                                getSessionsContainer()
+                            ) : null
+                        }
 
-                {
-                    // Show discussion
-                    selectedTab === HoopSpotTabEnum.discussions ? (
-                        <CommentList hoopSpot={props.hoopSpot}/>
-                    ) : null
-                }
+                        {
+                            // Show discussion
+                            selectedTab === HoopSpotTabEnum.discussions ? (
+                                <CommentList hoopSpot={props.hoopSpot}/>
+                            ) : null
+                        }
+                    </div>
+                    <div className="hidden md:block col-span-1 flex">
+                        <h3 className="tracking-tight font-medium text-2xl text-gray-700 text-center mb-4">
+                            Nearby Hoop Spots
+                        </h3>
+                        <div className="grid gap-5 justify-center items-center">
+                            {
+                                nearbyHoopSpots.length > 0 ? nearbyHoopSpots.map(nearbyHoopSpot => (
+                                    <Link href={`/hoopspot/${nearbyHoopSpot.slug}`} key={nearbyHoopSpot.uuid}>
+                                        <div className="grid-row-1">
+                                            <HoopSpotImageCard hoopSpot={nearbyHoopSpot}/>
+                                        </div>
+                                    </Link>
+                                )): [...Array(6)].map((_i, index) => (
+                                    <div className="grid-row-1" key={index}>
+                                        <HoopSpotColSkeleton/>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </section>
