@@ -11,7 +11,6 @@ import {RestService} from '../services/RestService';
 import UserContext from '../components/context/UserContext'
 import {ResponseFactory} from '../interfaces/ResponseFactory';
 import {RegisterRequest} from '../interfaces/requests/RegisterRequest';
-import {router} from 'next/client';
 
 export default class MyApp extends App {
     private database: DBMethods;
@@ -84,7 +83,6 @@ export default class MyApp extends App {
             }).catch(error => {
             // Display an error notification and push them back to register page.
             this.notyf.error(error.response.data.message);
-            router.push('/register');
         });
     };
 
