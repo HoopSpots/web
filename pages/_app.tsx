@@ -10,6 +10,8 @@ import {Notyf} from 'notyf';
 import {RestService} from '../services/RestService';
 import UserContext from '../components/context/UserContext'
 import {ResponseFactory} from '../interfaces/ResponseFactory';
+import {RegisterRequest} from '../interfaces/requests/RegisterRequest';
+import {router} from 'next/client';
 
 export default class MyApp extends App {
     private database: DBMethods;
@@ -50,6 +52,42 @@ export default class MyApp extends App {
         })
     };
 
+    signUp = (registerRequest: RegisterRequest, nextUrl?: string) => {
+        axios.post(`${process.env.NEXT_PUBLIC_API_URL}/register`, registerRequest)
+            .then(async res => {
+                // let's get the token and user from the response.
+                let response: LoginResponse = res.data.data;
+                await this.database.set('token', response.token);
+                await this.database.set('user', response.user);
+                this.setState({user: response.user});
+
+                // If the query string has a url push the user there. otherwise push them to home
+                if (nextUrl) {
+                    await this.props.router.push(nextUrl);
+                } else {
+                    await this.props.router.push('/');
+                }
+            }).catch(error => {
+            // Display an error notification
+            this.notyf.error(error.response.data.message);
+        });
+    };
+
+    signUpWithFacebook = (code: string) => {
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/register/facebook/callback`, {params: {code: code}})
+            .then(async res => {
+                // let's get the token and user from the response.
+                let response: LoginResponse = res.data.data;
+                await this.database.set('token', response.token);
+                await this.database.set('user', response.user);
+                this.setState({user: response.user});
+            }).catch(error => {
+            // Display an error notification and push them back to register page.
+            this.notyf.error(error.response.data.message);
+            router.push('/register');
+        });
+    };
+
     signOut = () => {
         this.restService.makeHttpRequest(`logout`, `POST`).then(async (res: ResponseFactory<null>) => {
             this.notyf.success(res.message);
@@ -63,7 +101,7 @@ export default class MyApp extends App {
         const {Component, pageProps} = this.props;
 
         return (
-            <UserContext.Provider value={{user: this.state.user, signIn: this.signIn, signOut: this.signOut}}>
+            <UserContext.Provider value={{user: this.state.user, signIn: this.signIn, signOut: this.signOut, signUp: this.signUp, signUpWithFacebook: this.signUpWithFacebook}}>
                 <Component {...pageProps} />
             </UserContext.Provider>
         );

@@ -18,9 +18,12 @@ const LoginForm: FunctionComponent = () => {
         };
 
         if (signIn) {
-            // @ts-ignore
-            const nextUrl:string|undefined = decodeURIComponent(router.query?.ref);
-            signIn(request, nextUrl);
+            if (router.query?.ref) {
+                signIn(request, router.query?.ref as string);
+            }else {
+                signIn(request);
+            }
+
         }
     };
 

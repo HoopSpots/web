@@ -8,6 +8,7 @@ import {RestService} from '../../services/RestService';
 import {ResponseFactory} from '../../interfaces/ResponseFactory';
 import {HoopSpotCard} from '../card/HoopSpotCard';
 import {HoopSpotCardSkeleton} from '../skeleton/HoopSpotCardSkeleton';
+import {getPosition} from '../../services/Geolocation';
 
 const HoopSpotSlider: FunctionComponent = () => {
     const restService: RestService = new RestService();
@@ -31,12 +32,6 @@ const HoopSpotSlider: FunctionComponent = () => {
             },
         ]
     });
-
-    const getPosition = (options?: PositionOptions): Promise<Position>  =>{
-        return new Promise((resolve, reject) =>
-            navigator.geolocation.getCurrentPosition(resolve, reject, options)
-        );
-    };
 
     const getHoopSpots = (coords?: Coordinates) => {
         const params = coords ? {lat: coords.latitude, long: coords.longitude}: undefined;

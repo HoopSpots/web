@@ -86,6 +86,9 @@ const HoopSessionSection: FunctionComponent<HoopSessionstSectionProps> = (props)
             .then((res: ResponseFactory<null>) => {
                 notyf.success(res.message);
                 setIsAttending(response);
+                if (response) {
+                    members?.push(user);
+                }
             });
     };
 

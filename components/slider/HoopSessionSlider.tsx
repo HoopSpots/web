@@ -6,6 +6,7 @@ import {SectionHeading} from '../typography/SectionHeading';
 import {SliderButton} from '../button/SliderButton';
 import {HoopSessionCard} from '../card/HoopSessionCard';
 import {HoopSessionCardSkeleton} from '../skeleton/HoopSessionCardSkeleton';
+import {getPosition} from '../../services/Geolocation';
 
 const HoopSessionSlider: FunctionComponent = () => {
     const restService: RestService = new RestService();
@@ -29,11 +30,6 @@ const HoopSessionSlider: FunctionComponent = () => {
             },
         ]
     });
-    const getPosition = (options?: PositionOptions): Promise<Position>  =>{
-        return new Promise((resolve, reject) =>
-            navigator.geolocation.getCurrentPosition(resolve, reject, options)
-        );
-    };
 
     const getHoopSessions = (coords?: Coordinates) => {
         const params = coords ? {lat: coords.latitude, long: coords.longitude}: undefined;
