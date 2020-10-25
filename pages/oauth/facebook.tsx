@@ -1,19 +1,25 @@
-import React, {FunctionComponent, useContext, useEffect} from 'react';
+import React, {FunctionComponent, useContext, useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
 import UserContext from '../../components/context/UserContext';
 
 const Facebook: FunctionComponent = () => {
     const router = useRouter();
-    const {signUpWithFacebook} = useContext(UserContext);
+    const {signUpWithFacebook, user} = useContext(UserContext);
+    const [sentCode, setSentCode] = useState<boolean>(false);
     useEffect(() => {
-        if (process) {
+        if (!sentCode) {
             if (router.query.code) {
                 if (signUpWithFacebook){
                     signUpWithFacebook(router.query.code as string);
+                    setSentCode(true);
                 }
             }else {
                 // push somewhere else
             }
+        }
+
+        if (user) {
+            router.push('/');
         }
     });
 
