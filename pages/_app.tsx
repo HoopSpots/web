@@ -72,8 +72,9 @@ export default class MyApp extends App {
         });
     };
 
-    signUpWithFacebook = (code: string) => {
-        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/register/facebook/callback`, {params: {code: code}})
+    authWithFacebook = (code: string) => {
+        let route = `${process.env.NEXT_PUBLIC_API_URL}/facebook/callback`;
+        axios.get(route, {params: {code: code}})
             .then(async res => {
                 // let's get the token and user from the response.
                 let response: LoginResponse = res.data.data;
@@ -81,13 +82,15 @@ export default class MyApp extends App {
                 await this.database.set('user', response.user);
                 this.setState({user: response.user});
             }).catch(error => {
-            // Display an error notification and push them back to register page.
+            // Display an error notification and push them back to register or page.
             this.notyf.error(error.response.data.message);
+            this.props.router.push('/login')
         });
     };
 
-    signUpWithGoogle = (code: string) => {
-        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/register/google/callback`, {params: {code: code}})
+    authWithGoogle = (code: string) => {
+        let route = `${process.env.NEXT_PUBLIC_API_URL}/google/callback`;
+        axios.get(route, {params: {code: code}})
             .then(async res => {
                 // let's get the token and user from the response.
                 let response: LoginResponse = res.data.data;
@@ -97,6 +100,7 @@ export default class MyApp extends App {
             }).catch(error => {
             // Display an error notification and push them back to register page.
             this.notyf.error(error.response.data.message);
+            this.props.router.push('/login')
         });
     };
 
@@ -116,8 +120,8 @@ export default class MyApp extends App {
             signIn: this.signIn,
             signOut: this.signOut,
             signUp: this.signUp,
-            signUpWithFacebook: this.signUpWithFacebook,
-            signUpWithGoogle: this.signUpWithGoogle
+            authWithFacebook: this.authWithFacebook,
+            authWithGoogle: this.authWithGoogle
         };
 
         return (

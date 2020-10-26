@@ -30,14 +30,14 @@ const RegisterForm: FunctionComponent = () => {
         }
     };
 
-    const getFacebookOAuthUrl = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/register/facebook`).then((res) =>{
+    const getFacebookSignUpUrl = () => {
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/facebook`).then((res) =>{
             window.location.href = res.data.data;
         })
     };
 
-    const getGoogleOAuthUrl = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/register/google`).then((res) =>{
+    const getGoogleSignUpUrl = () => {
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/google`).then((res) =>{
             window.location.href = res.data.data;
         })
     };
@@ -103,13 +103,13 @@ const RegisterForm: FunctionComponent = () => {
                     </div>
                     <div className="flex items-center w-full mt-2">
                         <div className="w-full md:w-1/2 px-3 pt-4 mx-2">
-                            <button onClick={() => getFacebookOAuthUrl()} type="button" className="flex items-center justify-center block w-full border border-transparent text-sm py-3 px-3 leading-tight font-medium focus:outline-none rounded-md text-gray-900 bg-white shadow-lg rounded-lg hover:bg-gray-50 transition ease-in-out duration-150">
+                            <button onClick={() => getFacebookSignUpUrl()} type="button" className="flex items-center justify-center block w-full border border-transparent text-sm py-3 px-3 leading-tight font-medium focus:outline-none rounded-md text-gray-900 bg-white shadow-lg rounded-lg hover:bg-gray-50 transition ease-in-out duration-150">
                                 <img src="/images/facebook.png" alt="facebook" className="-ml-1 mr-2 h-5 w-5" />
                                 Facebook
                             </button>
                         </div>
                         <div className="w-full md:w-1/2 px-3 pt-4 mx-2">
-                            <button onClick={() => getGoogleOAuthUrl()} type="button" className="flex items-center justify-center block w-full border border-transparent text-sm py-3 px-3 leading-tight font-medium focus:outline-none rounded-md text-gray-900 bg-white shadow-lg rounded-lg hover:bg-gray-50 transition ease-in-out duration-150">
+                            <button onClick={() => getGoogleSignUpUrl()} type="button" className="flex items-center justify-center block w-full border border-transparent text-sm py-3 px-3 leading-tight font-medium focus:outline-none rounded-md text-gray-900 bg-white shadow-lg rounded-lg hover:bg-gray-50 transition ease-in-out duration-150">
                                 <img src="/images/google.png" alt="Google" className="-ml-1 mr-2 h-5 w-5" />
                                 Google
                             </button>

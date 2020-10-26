@@ -6,6 +6,6 @@ export interface UserContextProps {
     signIn?: ((request: LoginRequest, nextUrl?: string) => void) | undefined;
     signOut?: (() => void) | null;
     signUp?: ((request: RegisterRequest, nextUrl?: string) => void) | undefined;
-    signUpWithFacebook?: ((code: string) => void) | undefined;
-    signUpWithGoogle?: ((code: string) => void) | undefined;
+    authWithFacebook?: ((code: string) => void) | undefined;
+    authWithGoogle?: ((code: string, login?: boolean) => void) | undefined;
 }
