@@ -7,4 +7,5 @@ export interface UserContextProps {
     signOut?: (() => void) | null;
     signUp?: ((request: RegisterRequest, nextUrl?: string) => void) | undefined;
     signUpWithFacebook?: ((code: string) => void) | undefined;
+    signUpWithGoogle?: ((code: string) => void) | undefined;
 }

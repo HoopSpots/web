@@ -86,6 +86,20 @@ export default class MyApp extends App {
         });
     };
 
+    signUpWithGoogle = (code: string) => {
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/register/google/callback`, {params: {code: code}})
+            .then(async res => {
+                // let's get the token and user from the response.
+                let response: LoginResponse = res.data.data;
+                await this.database.set('token', response.token);
+                await this.database.set('user', response.user);
+                this.setState({user: response.user});
+            }).catch(error => {
+            // Display an error notification and push them back to register page.
+            this.notyf.error(error.response.data.message);
+        });
+    };
+
     signOut = () => {
         this.restService.makeHttpRequest(`logout`, `POST`).then(async (res: ResponseFactory<null>) => {
             this.notyf.success(res.message);
@@ -97,9 +111,17 @@ export default class MyApp extends App {
 
     render() {
         const {Component, pageProps} = this.props;
+        const userContextData = {
+            user: this.state.user,
+            signIn: this.signIn,
+            signOut: this.signOut,
+            signUp: this.signUp,
+            signUpWithFacebook: this.signUpWithFacebook,
+            signUpWithGoogle: this.signUpWithGoogle
+        };
 
         return (
-            <UserContext.Provider value={{user: this.state.user, signIn: this.signIn, signOut: this.signOut, signUp: this.signUp, signUpWithFacebook: this.signUpWithFacebook}}>
+            <UserContext.Provider value={userContextData}>
                 <Component {...pageProps} />
             </UserContext.Provider>
         );

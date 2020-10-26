@@ -6,7 +6,8 @@ const userContextProps: UserContextProps = {
     signIn: undefined,
     signOut: undefined,
     signUp: undefined,
-    signUpWithFacebook: undefined
+    signUpWithFacebook: undefined,
+    signUpWithGoogle: undefined
 };
 
 const UserContext = createContext(userContextProps);
