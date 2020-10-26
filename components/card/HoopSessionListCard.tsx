@@ -21,11 +21,11 @@ const HoopSessionListCard: FunctionComponent<HoopSessionListCardProps> = (props)
                                 <h3 className="flex text-primary text-sm font-medium tracking-tight">
                                     {props.hoopSession.hoopspot?.full_address}
                                 </h3>
-                                <h2 className="flex text-2xl font-semibold mb-2 tracking-wide">
+                                <h2 className="flex text-lg md:text-2xl font-semibold mb-2 tracking-wide">
                                     {props.hoopSession.hoopspot?.name}
                                 </h2>
                             </div>
-                            <div className="mt-2 flex-col md:flex-row md:flex space-x-2">
+                            <div className="mt-2 flex-col md:flex-row md:flex md:space-x-2">
                                 <div className="flex items-center text-sm leading-5 text-gray-500">
                                     <svg className="flex-shrink-0 mr-1.5 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                         <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />

@@ -6,9 +6,9 @@ import {SectionHeading} from '../typography/SectionHeading';
 import {SliderButton} from '../button/SliderButton';
 import {HoopSessionCard} from '../card/HoopSessionCard';
 import {HoopSessionCardSkeleton} from '../skeleton/HoopSessionCardSkeleton';
-import { GeolocatedProps } from "react-geolocated";
+import {getPosition} from '../../services/Geolocation';
 
-const HoopSessionSlider: FunctionComponent<GeolocatedProps> = (props) => {
+const HoopSessionSlider: FunctionComponent = () => {
     const restService: RestService = new RestService();
     const [hoopSessions, setHoopSessions] = useState<HoopSession[]>([]);
     const [sliderSettings] = useState({
@@ -30,16 +30,28 @@ const HoopSessionSlider: FunctionComponent<GeolocatedProps> = (props) => {
             },
         ]
     });
+
+    const getHoopSessions = (coords?: Coordinates) => {
+        const params = coords ? {lat: coords.latitude, long: coords.longitude}: undefined;
+        restService.makeHttpRequest(`hoopsessions`, `GET`, null, params).then((res: ResponseFactory<HoopSession[]>) => {
+            setHoopSessions(res.data)
+        });
+    };
+
     const [sliderRef, setSliderRef] = useState<Slider|null>(null);
     useEffect(() => {
         if (hoopSessions.length === 0) {
-            const params = props.isGeolocationEnabled ? {lat: props.coords?.latitude, long: props.coords?.longitude}: undefined;
-            console.log('params' + params);
-            restService.makeHttpRequest(`hoopsessions`, `GET`, null, params).then((res: ResponseFactory<HoopSession[]>) => {
-                setHoopSessions(res.data)
-            }).catch(err => {
-                console.log('here is my error ' + err);
-            });
+            getPosition()
+                .then((position) => {
+                    // show hoop sessions with geolocation enabled.
+                    getHoopSessions(position.coords);
+                }, () => {
+                    getHoopSessions();
+                })
+                .catch(() => {
+                    // get hoop sessions without geolocation if rejected.
+                    getHoopSessions();
+                });
         }
     });
 

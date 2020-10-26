@@ -15,7 +15,6 @@ const PageHoopSessionsList: FunctionComponent = () => {
     useEffect(() => {
         if (hoopSessions.length === 0) {
             restService.makeHttpRequest(`hoopsessions`, `GET`).then((res: ResponseFactory<HoopSession[]>) => {
-                console.log(res);
                 setHoopSessions(res.data);
             });
         }

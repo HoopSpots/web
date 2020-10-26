@@ -1,11 +1,13 @@
 import {FunctionComponent, useContext, useState} from 'react';
 import {LoginRequest} from '../../interfaces/requests/LoginRequest';
 import UserContext from '../context/UserContext';
+import {useRouter} from 'next/router';
 
 const LoginForm: FunctionComponent = () => {
     const {signIn} = useContext(UserContext);
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const router = useRouter();
 
     const loginFormSubmitHandler = (event: any) => {
         event.preventDefault();
@@ -16,7 +18,12 @@ const LoginForm: FunctionComponent = () => {
         };
 
         if (signIn) {
-            signIn(request);
+            if (router.query?.ref) {
+                signIn(request, router.query?.ref as string);
+            }else {
+                signIn(request);
+            }
+
         }
     };
 

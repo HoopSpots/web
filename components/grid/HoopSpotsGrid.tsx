@@ -4,6 +4,7 @@ import {ResponseFactory} from '../../interfaces/ResponseFactory';
 import HoopSpotImageCard from '../card/HoopSpotImageCard';
 import HoopSpotColSkeleton from '../skeleton/HoopSpotColSkeleton';
 import Link from 'next/link';
+import {getPosition} from '../../services/Geolocation';
 
 
 const HoopSpotsGrid: FunctionComponent = () => {
@@ -12,12 +13,26 @@ const HoopSpotsGrid: FunctionComponent = () => {
 
     useEffect(() => {
         if (hoopSpots.length === 0) {
-            restService.makeHttpRequest(`hoopspots`, `GET`).then((res: ResponseFactory<HoopSpot[]>) => {
-                console.log(res);
-                setHoopSpots(res.data);
-            });
+            getPosition()
+                .then((position) => {
+                    // show hoop sessions with geolocation enabled.
+                    getHoopSpots(position.coords);
+                }, () => {
+                    getHoopSpots();
+                })
+                .catch(() => {
+                    // get hoop spots without geolocation if rejected.
+                    getHoopSpots();
+                });
         }
     }, []);
+
+    const getHoopSpots = (coords?: Coordinates) => {
+        const params = coords ? {lat: coords.latitude, long: coords.longitude}: undefined;
+        restService.makeHttpRequest(`hoopspots`, `GET`, null, params).then((res: ResponseFactory<HoopSpot[]>) => {
+            setHoopSpots(res.data)
+        });
+    };
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center">
@@ -30,7 +45,7 @@ const HoopSpotsGrid: FunctionComponent = () => {
                             </a>
                         </Link>
                     </div>
-                )): [...Array(6)].map((_i, index) => (
+                )): [...Array(12)].map((_i, index) => (
                     <HoopSpotColSkeleton key={index}/>
                 ))
             }

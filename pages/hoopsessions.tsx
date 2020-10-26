@@ -23,7 +23,7 @@ function HoopSession() {
                     <div className="container mx-auto py-8">
                         <div className="md:max-w-5xl mx-auto px-4">
                             <div className="flex justify-between border-b border-gray-300 mb-5 pb-2 items-center">
-                                <h1 className="font-bold tracking-wide text-3xl">Hoop Sessions Near You</h1>
+                                <h1 className="font-bold tracking-wide text-2xl md:text-3xl">Hoop Sessions Near You</h1>
                             </div>
                             <PageHoopSessionsList/>
                         </div>
