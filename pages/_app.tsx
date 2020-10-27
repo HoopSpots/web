@@ -107,10 +107,11 @@ export default class MyApp extends App {
     signOut = () => {
         this.restService.makeHttpRequest(`logout`, `POST`).then(async (res: ResponseFactory<null>) => {
             this.notyf.success(res.message);
+        }).catch(err => console.log(err)).finally(() => {
             this.setState({user: null});
-            await this.database.delete('token');
-            await this.database.delete('user')
-        })
+            this.database.delete('token');
+            this.database.delete('user')
+        });
     };
 
     render() {
