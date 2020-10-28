@@ -13,17 +13,30 @@ import {ResponseFactory} from '../interfaces/ResponseFactory';
 import {RegisterRequest} from '../interfaces/requests/RegisterRequest';
 import {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
+// @ts-ignore
+import { init, push } from "@socialgouv/matomo-next";
+
 
 const App = ({ Component, pageProps }: AppProps) => {
     const [user, setUser] = useState<User|null>(null);
     const [loadedUser, setLoadedUser] = useState<boolean>(false);
+    const [initMatomo, setInitMatomo] = useState<boolean>(false);
     const { database } = new DatabaseService();
     const restService = new RestService();
     const router = useRouter();
+    const MATOMO_URL = process.env.NEXT_PUBLIC_MATOMO_URL;
+    const MATOMO_SITE_ID = process.env.NEXT_PUBLIC_MATOMO_SITE_ID;
 
     useEffect(() => {
         if (!loadedUser) {
             database.get('user').then(res => setUser(res)).finally(() => setLoadedUser(true));
+        }
+    });
+
+    useEffect(() =>{
+        if (!initMatomo) {
+            init({ url: MATOMO_URL, siteId: MATOMO_SITE_ID });
+            setInitMatomo(true);
         }
     });
 
