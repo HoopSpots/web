@@ -86,9 +86,6 @@ const HoopSessionSection: FunctionComponent<HoopSessionstSectionProps> = (props)
             .then((res: ResponseFactory<null>) => {
                 notyf.success(res.message);
                 setIsAttending(response);
-                if (response) {
-                    members?.push(user);
-                }
             });
     };
 
@@ -193,7 +190,7 @@ const HoopSessionSection: FunctionComponent<HoopSessionstSectionProps> = (props)
                             <div className="flex md:hidden">
                                 {
                                     isAttending ? (
-                                        <LeaveButton onClick={() => respondToHoopSession(false)}>Not Attending</LeaveButton>
+                                        <LeaveButton onClick={() => respondToHoopSession(false)}>Back Out</LeaveButton>
                                     ) : (
                                         <AddButton onClick={() => respondToHoopSession(true)}>Attend</AddButton>
                                     )
@@ -226,7 +223,7 @@ const HoopSessionSection: FunctionComponent<HoopSessionstSectionProps> = (props)
                                 </span>
                                 {
                                     isAttending ? (
-                                        <LeaveButton onClick={() => respondToHoopSession(false)}>Not Attending</LeaveButton>
+                                        <LeaveButton onClick={() => respondToHoopSession(false)}>Back Out</LeaveButton>
                                     ) : (
                                         <AddButton onClick={() => respondToHoopSession(true)}>Attend</AddButton>
                                     )

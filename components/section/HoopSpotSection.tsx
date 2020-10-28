@@ -280,22 +280,11 @@ const HoopSpotSection: FunctionComponent<HoopSpotSectionProps> = (props) => {
                                 <span className="inline-flex rounded-md shadow-sm">
                                     {
                                         isMember ? (
-                                            <LeaveButton onClick={() => leaveHoopSpot()}>Leave</LeaveButton>
+                                            <LeaveButton onClick={() => leaveHoopSpot()}>Unfollow</LeaveButton>
                                         ): (
-                                            <AddButton onClick={() => joinHoopSpot()}>Join</AddButton>
+                                            <AddButton onClick={() => joinHoopSpot()}>Follow</AddButton>
                                         )
                                     }
-                                </span>
-
-                                <span className="inline-flex">
-                                    <button type="button"
-                                            className="inline-flex items-center px-1 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-600 focus:outline-none transition ease-in-out duration-150">
-                                        <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"
-                                             xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/>
-                                        </svg>
-                                    </button>
                                 </span>
 
                                 <span className="inline-flex rounded-md shadow-sm hidden">
