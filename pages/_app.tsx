@@ -13,6 +13,7 @@ import {ResponseFactory} from '../interfaces/ResponseFactory';
 import {RegisterRequest} from '../interfaces/requests/RegisterRequest';
 import {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
+import * as gtag from "../utils/gtag";
 
 const App = ({ Component, pageProps }: AppProps) => {
     const [user, setUser] = useState<User|null>(null);
@@ -26,6 +27,16 @@ const App = ({ Component, pageProps }: AppProps) => {
             database.get('user').then(res => setUser(res)).finally(() => setLoadedUser(true));
         }
     });
+
+    useEffect(() =>{
+        const handleRouteChange = (url: URL) => {
+            gtag.pageview(url);
+        };
+        router.events.on("routeChangeComplete", handleRouteChange);
+        return () => {
+            router.events.off("routeChangeComplete", handleRouteChange);
+        };
+    }, [router.events]);
 
     const signIn = (loginRequest: LoginRequest, nextUrl?: string) => {
         axios.post(`${process.env.NEXT_PUBLIC_API_URL}/login`, loginRequest)
