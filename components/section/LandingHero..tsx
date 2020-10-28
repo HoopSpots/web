@@ -19,21 +19,20 @@ export class LandingHero extends Component<MyProps, MyState> {
                             Start Hooping with <br/> <span className="text-primary"> Hoop Spots</span> 🏀📍
                         </h1>
                         <p className="mt-3 max-w-md mx-auto text-gray-700 text-lg sm:text-xl md:mt-5 md:max-w-3xl">
-                            Hoop Spots allows you to find hoop sessions near you. Invite your friends to a hoop session and
+                            Hoop Spots allows you to find hoop sessions near you. Invite your friends to a hoop session
+                            and
                             start hooping today!
                         </p>
                         <div className="mt-10 space-x-3">
-                            <div className="inline-flex rounded-full shadow-lg">
-                                <button type="button"
-                                        className="inline-flex items-center px-8 py-3 border border-transparent text-base leading-6 font-semibold rounded-full  text-primary bg-white uppercase focus:outline-none focus:shadow-outline-orange transition ease-in-out duration-150">
-                                    Join Hoop Spots
-                                </button>
-                            </div>
-                            <div className="inline-flex rounded-full shadow-lg">
-                                <button type="button"
-                                        className="inline-flex items-center px-8 py-3 border border-transparent text-base leading-6 font-semibold rounded-full text-white bg-primary uppercase focus:outline-none focus:shadow-outline-orange transition ease-in-out duration-150">
-                                    Invite Friends
-                                </button>
+                            <div className="grid grid-cols-2 gap-4">
+                                <a href="#">
+                                    <img src="/images/app-store.png" className="col-span-1 max-h-16"
+                                         alt="app store badge"/>
+                                </a>
+                                <a href="#">
+                                    <img src="/images/google-play.png" className="col-span-1 max-h-16"
+                                         alt="google play badge"/>
+                                </a>
                             </div>
                         </div>
                     </div>

@@ -175,6 +175,7 @@ const HoopSpotSection: FunctionComponent<HoopSpotSectionProps> = (props) => {
         return (
             <div className="md:max-w-6xl">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {/* Select between upcoming or past sessions */}
                     <div className="hidden md:block col-span-1">
                         <nav className="bg-white shadow rounded-lg border-gray-50">
                             <span
@@ -189,7 +190,11 @@ const HoopSpotSection: FunctionComponent<HoopSpotSectionProps> = (props) => {
                             </span>
                         </nav>
                     </div>
-                    <div className="col-span-2">
+                    <select className="block md:hidden form-select col-span-1 w-full" onChange={e => setFilterSessionsByDate(e.target.value as DateFilterEnum)} value={filterSessionsByDate} >
+                        <option value={DateFilterEnum.upcoming}>Upcoming</option>
+                        <option value={DateFilterEnum.past}>Past</option>
+                    </select>
+                    <div className="col-span-1 md:col-span-2">
                         <FullHoopSessionsList hoopSessions={filterSessions()}/>
                     </div>
                 </div>
