@@ -5,16 +5,12 @@ import {ResponseFactory} from '../../interfaces/ResponseFactory';
 import UserContext from '../context/UserContext';
 import {Notyf} from 'notyf';
 
-type PersonalSettingsFormProps = {
-    user: User | null;
-}
-
-const PersonalSettingsForm: FunctionComponent<PersonalSettingsFormProps> = (props) => {
+const PersonalSettingsForm: FunctionComponent = () => {
     const restService = new RestService();
-    const {updateUser} = useContext(UserContext);
-    const [name, setName] = useState(props.user?.name);
-    const [city, setCity] = useState(props.user?.primary_city ?? '');
-    const [state, setState] = useState(props.user?.primary_state  ?? 'MN');
+    const {updateUser, user} = useContext(UserContext);
+    const [name, setName] = useState(user?.name);
+    const [city, setCity] = useState(user?.primary_city ?? '');
+    const [state, setState] = useState(user?.primary_state  ?? 'MN');
 
     const updatePersonalSettingsHandler = (event: any) => {
         const notyf = new Notyf();
@@ -64,7 +60,7 @@ const PersonalSettingsForm: FunctionComponent<PersonalSettingsFormProps> = (prop
                                             <label htmlFor="email_address" className="block text-sm font-medium leading-5 text-gray-700">Email address</label>
                                             <input id="email_address"
                                                    disabled={true}
-                                                   value={props.user?.email}
+                                                   value={user?.email}
                                                    className="mt-1 bg-gray-50 text-gray-500 cursor-not-allowed form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
                                         </div>
                                         <div className="col-span-6 md:col-span-3">

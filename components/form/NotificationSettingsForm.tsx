@@ -4,17 +4,13 @@ import UserContext from '../context/UserContext';
 import {Notyf} from 'notyf';
 import {ResponseFactory} from '../../interfaces/ResponseFactory';
 
-type NotificationSettingsFormProps = {
-    user: User | null;
-}
-
-const NotificationSettingsForm: FunctionComponent<NotificationSettingsFormProps> = (props) => {
+const NotificationSettingsForm: FunctionComponent = () => {
     const restService = new RestService();
-    const {updateUser} = useContext(UserContext);
-    const [notifyFollowerActivity, setNotifyFollowerActivity] = useState<boolean>(props.user?.notify_follower_activity || false);
-    const [notifyRecommendations, setNotifyRecommendations] = useState<boolean>(props.user?.notify_recommendations || false);
-    const [notifyHoopSessions, setNotifyHoopSessions] = useState<boolean>(props.user?.notify_hoop_sessions || false);
-    const [notifyComments, setNotifyComments] = useState<boolean>(props.user?.notify_comments || false);
+    const {updateUser, user} = useContext(UserContext);
+    const [notifyFollowerActivity, setNotifyFollowerActivity] = useState<boolean>(user?.notify_follower_activity || false);
+    const [notifyRecommendations, setNotifyRecommendations] = useState<boolean>(user?.notify_recommendations || false);
+    const [notifyHoopSessions, setNotifyHoopSessions] = useState<boolean>(user?.notify_hoop_sessions || false);
+    const [notifyComments, setNotifyComments] = useState<boolean>(user?.notify_comments || false);
 
     const updateNotificationSettingsHandler = (event: any) => {
         const notyf = new Notyf();

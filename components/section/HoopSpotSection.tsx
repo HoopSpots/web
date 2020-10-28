@@ -37,12 +37,13 @@ const HoopSpotSection: FunctionComponent<HoopSpotSectionProps> = (props) => {
     const [filterSessionsByDate, setFilterSessionsByDate] = useState<DateFilterEnum.past | DateFilterEnum.upcoming>(DateFilterEnum.upcoming);
     const [isMember, setIsMember] = useState<boolean|undefined>(undefined);
     const [nearbyHoopSpots, setNearbyHoopSpots] = useState<HoopSpot[]>([]);
+    const [loadedNearbyHoopSpots, setLoadedNearbyHoopSpots] = useState<boolean>(false);
     useEffect(() => {
         if (isMember === undefined) {
             setIsMember(checkIfMember);
         }
 
-        if (nearbyHoopSpots.length === 0) {
+        if (!loadedNearbyHoopSpots) {
             getNearbyHoopSpots();
         }
     });
@@ -72,6 +73,7 @@ const HoopSpotSection: FunctionComponent<HoopSpotSectionProps> = (props) => {
             .then((res: ResponseFactory<HoopSpot[]>) => {
                 setNearbyHoopSpots(res.data);
             });
+        setLoadedNearbyHoopSpots(true);
     };
 
     const fbShareLink = () => {

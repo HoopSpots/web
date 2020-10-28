@@ -29,13 +29,14 @@ const HoopSessionSection: FunctionComponent<HoopSessionstSectionProps> = (props)
     const [members] = useState<User[] | null | undefined>(props.hoopSession.members);
     const [isAttending, setIsAttending] = useState<boolean | undefined>(undefined);
     const [nearbyHoopSessions, setNearbyHoopSessions] = useState<HoopSession[]>([]);
+    const [loadedNearbyHoopSessions, setLoadedNearbyHoopSessions] = useState<boolean>(false);
 
     useEffect(() => {
         if (isAttending === undefined) {
             setIsAttending(checkIfAttending);
         }
 
-        if (nearbyHoopSessions.length === 0) {
+        if (!loadedNearbyHoopSessions) {
             getNearbyHoopSessions();
         }
     });
@@ -94,6 +95,7 @@ const HoopSessionSection: FunctionComponent<HoopSessionstSectionProps> = (props)
             .then((res: ResponseFactory<HoopSession[]>) => {
                 setNearbyHoopSessions(res.data);
             });
+        setLoadedNearbyHoopSessions(true);
     };
 
     const getAttendeesContainer = () => {

@@ -7,7 +7,7 @@ import NotificationSettingsForm from '../form/NotificationSettingsForm';
 import {useRouter} from 'next/router';
 
 const SettingsSection: FunctionComponent = () => {
-    const {user, isAuthenticated} = useContext(UserContext);
+    const {isAuthenticated} = useContext(UserContext);
     const router = useRouter();
 
     useEffect(() => {
@@ -19,11 +19,11 @@ const SettingsSection: FunctionComponent = () => {
     return (
         <section className="py-8 md:py-16 md:my-0 bg-accent h-full">
             <div className="container mx-auto">
-                <ProfileSettingsForm user={user}/>
+                <ProfileSettingsForm/>
                 <Divider/>
-                <PersonalSettingsForm user={user}/>
+                <PersonalSettingsForm/>
                 <Divider/>
-                <NotificationSettingsForm user={user}/>
+                <NotificationSettingsForm/>
             </div>
         </section>
     );

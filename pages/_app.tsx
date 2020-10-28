@@ -16,12 +16,15 @@ import {useRouter} from 'next/router';
 
 const App = ({ Component, pageProps }: AppProps) => {
     const [user, setUser] = useState<User|null>(null);
+    const [loadedUser, setLoadedUser] = useState<boolean>(false);
     const { database } = new DatabaseService();
     const restService = new RestService();
     const router = useRouter();
 
     useEffect(() => {
-        database.get('user').then(res => setUser(res));
+        if (!loadedUser) {
+            database.get('user').then(res => setUser(res)).finally(() => setLoadedUser(true));
+        }
     });
 
     const signIn = (loginRequest: LoginRequest, nextUrl?: string) => {
@@ -110,7 +113,7 @@ const App = ({ Component, pageProps }: AppProps) => {
             notyf.success(res.message);
             router.push('/');
         }).catch(err => console.log(err)).finally(() => {
-            setUser(user);
+            setUser(null);
             database.delete('token');
             database.delete('user')
         });
@@ -123,7 +126,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 
     const userContextData = {
         user: user,
-        isAuthenticated: !!user,
+        isAuthenticated: loadedUser ? !!user : undefined,
         updateUser: updateUser,
         signIn: signIn,
         signOut: signOut,

@@ -41,6 +41,7 @@ const HoopSpotSlider: FunctionComponent = () => {
         }).catch(() => {
 
         });
+        setLoadedHoopSpots(true);
     };
 
     const [sliderRef, setSliderRef] = useState<Slider|null>(null);
@@ -57,7 +58,6 @@ const HoopSpotSlider: FunctionComponent = () => {
                     // get hoop spots without geolocation if rejected.
                     getHoopSpots();
                 });
-            setLoadedHoopSpots(true);
         }
     });
 

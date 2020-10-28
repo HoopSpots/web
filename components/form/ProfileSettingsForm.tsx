@@ -4,25 +4,26 @@ import UserContext from '../context/UserContext';
 import {ResponseFactory} from '../../interfaces/ResponseFactory';
 import {Notyf} from 'notyf';
 
-type ProfileSettingsFormProps = {
-    user: User | null;
-}
 
-const ProfileSettingsForm: FunctionComponent<ProfileSettingsFormProps> = (props) => {
+const ProfileSettingsForm: FunctionComponent = () => {
     const restService = new RestService();
     const imageRef = useRef(null);
-    const {updateUser} = useContext(UserContext);
+    const {updateUser, user} = useContext(UserContext);
     const [profileUrl, setProfileUrl] = useState<string>('');
-    const [avatar, setAvatar] = useState<any>(props.user?.avatar);
+    const [loadedProfileUrl, setLoadedProfileUrl] = useState<boolean>(false);
+    const [avatar, setAvatar] = useState<any>(user?.avatar);
     useEffect(() => {
-        setProfileUrl(`${document.location.host}/profile/${props.user?.slug}`);
+        if (!loadedProfileUrl) {
+            setProfileUrl(`${document.location.host}/profile/${user?.slug}`);
+            setLoadedProfileUrl(true);
+        }
     });
 
     const updateProfileSettingsHandler = (event: any) => {
         event.preventDefault();
 
         // only send request if image changed
-        if (avatar != props.user?.avatar) {
+        if (avatar != user?.avatar) {
             const notyf = new Notyf();
             const body = {avatar: avatar};
             restService.makeHttpRequest(`account`, `PATCH`, body).then((res: ResponseFactory<User>) => {
@@ -92,7 +93,7 @@ const ProfileSettingsForm: FunctionComponent<ProfileSettingsFormProps> = (props)
                                     <div className="mt-2 flex items-center">
                                         <img
                                             className="inline-block h-16 w-16 rounded-full overflow-hidden bg-gray-100"
-                                            src={avatar} alt={props.user?.name}/>
+                                            src={avatar} alt={user?.name}/>
                                             <input id="image"
                                                    type='file'
                                                    accept="image/*"
