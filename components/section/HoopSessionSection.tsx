@@ -29,13 +29,14 @@ const HoopSessionSection: FunctionComponent<HoopSessionstSectionProps> = (props)
     const [members] = useState<User[] | null | undefined>(props.hoopSession.members);
     const [isAttending, setIsAttending] = useState<boolean | undefined>(undefined);
     const [nearbyHoopSessions, setNearbyHoopSessions] = useState<HoopSession[]>([]);
+    const [loadedNearbyHoopSessions, setLoadedNearbyHoopSessions] = useState<boolean>(false);
 
     useEffect(() => {
         if (isAttending === undefined) {
             setIsAttending(checkIfAttending);
         }
 
-        if (nearbyHoopSessions.length === 0) {
+        if (!loadedNearbyHoopSessions) {
             getNearbyHoopSessions();
         }
     });
@@ -86,9 +87,6 @@ const HoopSessionSection: FunctionComponent<HoopSessionstSectionProps> = (props)
             .then((res: ResponseFactory<null>) => {
                 notyf.success(res.message);
                 setIsAttending(response);
-                if (response) {
-                    members?.push(user);
-                }
             });
     };
 
@@ -97,6 +95,7 @@ const HoopSessionSection: FunctionComponent<HoopSessionstSectionProps> = (props)
             .then((res: ResponseFactory<HoopSession[]>) => {
                 setNearbyHoopSessions(res.data);
             });
+        setLoadedNearbyHoopSessions(true);
     };
 
     const getAttendeesContainer = () => {
@@ -193,7 +192,7 @@ const HoopSessionSection: FunctionComponent<HoopSessionstSectionProps> = (props)
                             <div className="flex md:hidden">
                                 {
                                     isAttending ? (
-                                        <LeaveButton onClick={() => respondToHoopSession(false)}>Not Attending</LeaveButton>
+                                        <LeaveButton onClick={() => respondToHoopSession(false)}>Back Out</LeaveButton>
                                     ) : (
                                         <AddButton onClick={() => respondToHoopSession(true)}>Attend</AddButton>
                                     )
@@ -226,7 +225,7 @@ const HoopSessionSection: FunctionComponent<HoopSessionstSectionProps> = (props)
                                 </span>
                                 {
                                     isAttending ? (
-                                        <LeaveButton onClick={() => respondToHoopSession(false)}>Not Attending</LeaveButton>
+                                        <LeaveButton onClick={() => respondToHoopSession(false)}>Back Out</LeaveButton>
                                     ) : (
                                         <AddButton onClick={() => respondToHoopSession(true)}>Attend</AddButton>
                                     )

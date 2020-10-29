@@ -10,15 +10,21 @@ dayjs.extend(localizedFormat);
 
 const PageHoopSessionsList: FunctionComponent = () => {
     const [hoopSessions, setHoopSessions] = useState<HoopSession[]>([]);
+    const [loadedHoopSessions, setLoadedHoopSessions] = useState<boolean>(false);
     const restService: RestService = new RestService();
 
     useEffect(() => {
-        if (hoopSessions.length === 0) {
-            restService.makeHttpRequest(`hoopsessions`, `GET`).then((res: ResponseFactory<HoopSession[]>) => {
-                setHoopSessions(res.data);
-            });
+        if (!loadedHoopSessions) {
+            getHoopSessions()
         }
     }, []);
+
+    const getHoopSessions = () => {
+        restService.makeHttpRequest(`hoopsessions`, `GET`).then((res: ResponseFactory<HoopSession[]>) => {
+            setHoopSessions(res.data);
+        });
+        setLoadedHoopSessions(true);
+    };
 
     return (
         <ul className="space-y-4 w-full">

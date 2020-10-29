@@ -12,4 +12,15 @@ type User = {
 	hoop_spots?: HoopSpot[]|null
 	hoop_sessions?: HoopSession[]|null
 	avatar?: string
+	slug: string;
+	primary_lat: number
+	primary_long: number
+	provider: string | null
+	provider_id: string | null
+	primary_city: string | null
+	primary_state: string | null
+	notify_follower_activity: boolean
+	notify_recommendations: boolean
+	notify_hoop_sessions: boolean
+	notify_comments: boolean
 };

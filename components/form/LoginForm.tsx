@@ -2,6 +2,7 @@ import {FunctionComponent, useContext, useState} from 'react';
 import {LoginRequest} from '../../interfaces/requests/LoginRequest';
 import UserContext from '../context/UserContext';
 import {useRouter} from 'next/router';
+import axios from 'axios';
 
 const LoginForm: FunctionComponent = () => {
     const {signIn} = useContext(UserContext);
@@ -25,6 +26,18 @@ const LoginForm: FunctionComponent = () => {
             }
 
         }
+    };
+
+    const getFacebookLoginUrl = () => {
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/facebook`).then((res) =>{
+            window.location.href = res.data.data;
+        })
+    };
+
+    const getGoogleLoginUrl = () => {
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/google`).then((res) =>{
+            window.location.href = res.data.data;
+        })
     };
 
 
@@ -72,6 +85,23 @@ const LoginForm: FunctionComponent = () => {
                             className="appearance-none block w-full bg-primary text-gray-100 font-bold border border-gray-200 rounded-lg py-3 px-3 leading-tight hover:text-white focus:outline-none  focus:shadow-outline-orange">
                             Sign In
                         </button>
+                    </div>
+                    <div className="mx-auto -mb-6 pb-1">
+                        <span className="text-center text-xs text-gray-700">or login with</span>
+                    </div>
+                    <div className="flex items-center w-full mt-2">
+                        <div className="w-full md:w-1/2 px-3 pt-4 mx-2">
+                            <button onClick={() => getFacebookLoginUrl()} type="button" className="flex items-center justify-center block w-full border border-transparent text-sm py-3 px-3 leading-tight font-medium focus:outline-none rounded-md text-gray-900 bg-white shadow-lg rounded-lg hover:bg-gray-50 transition ease-in-out duration-150">
+                                <img src="/images/facebook.png" alt="facebook" className="-ml-1 mr-2 h-5 w-5" />
+                                Facebook
+                            </button>
+                        </div>
+                        <div className="w-full md:w-1/2 px-3 pt-4 mx-2">
+                            <button onClick={() => getGoogleLoginUrl()} type="button" className="flex items-center justify-center block w-full border border-transparent text-sm py-3 px-3 leading-tight font-medium focus:outline-none rounded-md text-gray-900 bg-white shadow-lg rounded-lg hover:bg-gray-50 transition ease-in-out duration-150">
+                                <img src="/images/google.png" alt="Google" className="-ml-1 mr-2 h-5 w-5" />
+                                Google
+                            </button>
+                        </div>
                     </div>
                 </div>
             </form>

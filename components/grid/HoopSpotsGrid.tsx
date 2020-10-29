@@ -9,10 +9,11 @@ import {getPosition} from '../../services/Geolocation';
 
 const HoopSpotsGrid: FunctionComponent = () => {
     const [hoopSpots, setHoopSpots] = useState<HoopSpot[]>([]);
+    const [loadedHoopSpots, setLoadedHoopSpots] = useState<boolean>(false);
     const restService: RestService = new RestService();
 
     useEffect(() => {
-        if (hoopSpots.length === 0) {
+        if (!loadedHoopSpots) {
             getPosition()
                 .then((position) => {
                     // show hoop sessions with geolocation enabled.
@@ -32,6 +33,7 @@ const HoopSpotsGrid: FunctionComponent = () => {
         restService.makeHttpRequest(`hoopspots`, `GET`, null, params).then((res: ResponseFactory<HoopSpot[]>) => {
             setHoopSpots(res.data)
         });
+        setLoadedHoopSpots(true);
     };
 
     return (

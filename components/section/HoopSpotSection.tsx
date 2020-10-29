@@ -37,12 +37,13 @@ const HoopSpotSection: FunctionComponent<HoopSpotSectionProps> = (props) => {
     const [filterSessionsByDate, setFilterSessionsByDate] = useState<DateFilterEnum.past | DateFilterEnum.upcoming>(DateFilterEnum.upcoming);
     const [isMember, setIsMember] = useState<boolean|undefined>(undefined);
     const [nearbyHoopSpots, setNearbyHoopSpots] = useState<HoopSpot[]>([]);
+    const [loadedNearbyHoopSpots, setLoadedNearbyHoopSpots] = useState<boolean>(false);
     useEffect(() => {
         if (isMember === undefined) {
             setIsMember(checkIfMember);
         }
 
-        if (nearbyHoopSpots.length === 0) {
+        if (!loadedNearbyHoopSpots) {
             getNearbyHoopSpots();
         }
     });
@@ -72,6 +73,7 @@ const HoopSpotSection: FunctionComponent<HoopSpotSectionProps> = (props) => {
             .then((res: ResponseFactory<HoopSpot[]>) => {
                 setNearbyHoopSpots(res.data);
             });
+        setLoadedNearbyHoopSpots(true);
     };
 
     const fbShareLink = () => {
@@ -173,6 +175,7 @@ const HoopSpotSection: FunctionComponent<HoopSpotSectionProps> = (props) => {
         return (
             <div className="md:max-w-6xl">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {/* Select between upcoming or past sessions */}
                     <div className="hidden md:block col-span-1">
                         <nav className="bg-white shadow rounded-lg border-gray-50">
                             <span
@@ -187,7 +190,11 @@ const HoopSpotSection: FunctionComponent<HoopSpotSectionProps> = (props) => {
                             </span>
                         </nav>
                     </div>
-                    <div className="col-span-2">
+                    <select className="block md:hidden form-select col-span-1 w-full" onChange={e => setFilterSessionsByDate(e.target.value as DateFilterEnum)} value={filterSessionsByDate} >
+                        <option value={DateFilterEnum.upcoming}>Upcoming</option>
+                        <option value={DateFilterEnum.past}>Past</option>
+                    </select>
+                    <div className="col-span-1 md:col-span-2">
                         <FullHoopSessionsList hoopSessions={filterSessions()}/>
                     </div>
                 </div>
@@ -280,22 +287,11 @@ const HoopSpotSection: FunctionComponent<HoopSpotSectionProps> = (props) => {
                                 <span className="inline-flex rounded-md shadow-sm">
                                     {
                                         isMember ? (
-                                            <LeaveButton onClick={() => leaveHoopSpot()}>Leave</LeaveButton>
+                                            <LeaveButton onClick={() => leaveHoopSpot()}>Unfollow</LeaveButton>
                                         ): (
-                                            <AddButton onClick={() => joinHoopSpot()}>Join</AddButton>
+                                            <AddButton onClick={() => joinHoopSpot()}>Follow</AddButton>
                                         )
                                     }
-                                </span>
-
-                                <span className="inline-flex">
-                                    <button type="button"
-                                            className="inline-flex items-center px-1 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-600 focus:outline-none transition ease-in-out duration-150">
-                                        <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"
-                                             xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/>
-                                        </svg>
-                                    </button>
                                 </span>
 
                                 <span className="inline-flex rounded-md shadow-sm hidden">

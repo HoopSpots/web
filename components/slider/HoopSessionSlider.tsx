@@ -11,6 +11,7 @@ import {getPosition} from '../../services/Geolocation';
 const HoopSessionSlider: FunctionComponent = () => {
     const restService: RestService = new RestService();
     const [hoopSessions, setHoopSessions] = useState<HoopSession[]>([]);
+    const [loadedHoopSessions, setLoadedHoopSessions] = useState<boolean>(false);
     const [sliderSettings] = useState({
         arrows: false,
         slidesToShow: 3,
@@ -40,7 +41,7 @@ const HoopSessionSlider: FunctionComponent = () => {
 
     const [sliderRef, setSliderRef] = useState<Slider|null>(null);
     useEffect(() => {
-        if (hoopSessions.length === 0) {
+        if (!loadedHoopSessions) {
             getPosition()
                 .then((position) => {
                     // show hoop sessions with geolocation enabled.
@@ -52,6 +53,7 @@ const HoopSessionSlider: FunctionComponent = () => {
                     // get hoop sessions without geolocation if rejected.
                     getHoopSessions();
                 });
+            setLoadedHoopSessions(true);
         }
     });
 
