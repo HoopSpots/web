@@ -26,12 +26,12 @@ const HoopSpotsPage: FunctionComponent = () => {
                     getHoopSpots();
                 });
         }
-    }, hoopSpots);
+    }, []);
 
     const getHoopSpots = (coords?: Coordinates) => {
         const params = coords ? {lat: coords.latitude, long: coords.longitude}: undefined;
         restService.makeHttpRequest(`hoopspots`, `GET`, null, params).then((res: ResponseFactory<HoopSpot[]>) => {
-            setHoopSpots(res.data)
+            setHoopSpots(res.data);
             setLoadedHoopSpots(true);
         });
     };

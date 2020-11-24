@@ -12,7 +12,7 @@ type HoopSpotSearchProps = {
 const HoopSpotSearch: FunctionComponent<HoopSpotSearchProps> = (props) => {
     const [name, setName] = useState<string>('');
     const [distance, setDistance] = useState<number>(100);
-    const [hasCovidRestriction, setHasCovidRestriction] = useState<boolean>(false);
+    const [hasCovidRestriction, setHasCovidRestriction] = useState<string>('no');
     const [hoopSpotType, setHoopSpotType] = useState<keyof typeof HoopSpotTypeEnum | undefined>(undefined);
     const restService = new RestService();
 
@@ -36,7 +36,7 @@ const HoopSpotSearch: FunctionComponent<HoopSpotSearchProps> = (props) => {
         let filter = {
             filter: {
                 name: name ? name : undefined,
-                has_covid_restriction: hasCovidRestriction ? undefined : false,
+                has_covid_restriction: hasCovidRestriction === 'yes',
                 hoop_spot_type: hoopSpotType ?? undefined
             }
         };
@@ -100,10 +100,10 @@ const HoopSpotSearch: FunctionComponent<HoopSpotSearchProps> = (props) => {
                         <select
                             id="show_closed_gyms"
                             value={hasCovidRestriction}
-                            onChange={event => setHasCovidRestriction(event.target.value as unknown as boolean)}
+                            onChange={event => setHasCovidRestriction(event.target.value)}
                             className="form-select w-full block bg-gray-50 rounded-md px-3 py-3 shadow focus:outline-none h-12 text-sm font-medium text-gray-500">
-                            <option value={0}>No</option>
-                            <option value={1}>Yes</option>
+                            <option>No</option>
+                            <option>Yes</option>
                         </select>
                     </div>
                     <div className="col-span-1 lg:col-span-1 lg:my-4 space-y-1">
