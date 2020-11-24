@@ -26,7 +26,7 @@ const HoopSpotsPage: FunctionComponent = () => {
                     getHoopSpots();
                 });
         }
-    }, []);
+    }, hoopSpots);
 
     const getHoopSpots = (coords?: Coordinates) => {
         const params = coords ? {lat: coords.latitude, long: coords.longitude}: undefined;
