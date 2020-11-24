@@ -19,10 +19,10 @@ const HoopSessionListCard: FunctionComponent<HoopSessionListCardProps> = (props)
                         <div>
                             <div className="leading-5 space-y-1 truncate py-2">
                                 <h3 className="flex text-primary text-sm font-medium tracking-tight">
-                                    {props.hoopSession.hoopspot?.full_address}
+                                    {props.hoopSession.hoop_spot?.full_address}
                                 </h3>
                                 <h2 className="flex text-lg md:text-2xl font-semibold mb-2 tracking-wide">
-                                    {props.hoopSession.hoopspot?.name}
+                                    {props.hoopSession.hoop_spot?.name}
                                 </h2>
                             </div>
                             <div className="mt-2 flex-col md:flex-row md:flex md:space-x-2">
@@ -43,7 +43,7 @@ const HoopSessionListCard: FunctionComponent<HoopSessionListCardProps> = (props)
                                         <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z">
                                         </path>
                                     </svg>
-                                    <span className="tracking-tighter font-light">{props.hoopSession.members?.length} attending</span>
+                                    <span className="tracking-tighter font-light">{props.hoopSession.members_count} attending</span>
                                 </div>
                             </div>
                         </div>

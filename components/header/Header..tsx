@@ -15,7 +15,7 @@ const Header: FunctionComponent = () => {
                     <div>
                         <Link href="/">
                             <span className="flex text-primary text-2xl font-base cursor-pointer">
-                                HoopSpots 🏀📍
+                                HoopSpots
                             </span>
                         </Link>
                     </div>

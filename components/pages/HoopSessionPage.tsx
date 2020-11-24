@@ -1,27 +1,23 @@
 import React, {FunctionComponent, useContext, useEffect, useState} from 'react';
-import dayjs from 'dayjs';
-import localizedFormat from 'dayjs/plugin/localizedFormat';
 import UserContext from '../context/UserContext';
 import {useRouter} from 'next/router';
-import {Notyf} from 'notyf';
 import {RestService} from '../../services/RestService';
-import Link from 'next/link';
-import AddButton from '../button/AddButton';
-import LeaveButton from '../button/LeaveButton';
+import {Notyf} from 'notyf';
+import {ResponseFactory} from '../../interfaces/ResponseFactory';
+import dayjs from 'dayjs';
 import FullMemberList from '../list/FullMemberList';
 import {MemberListTypeEnum} from '../../interfaces/enums/MemberListTypeEnum';
-import HoopSpotColSkeleton from '../skeleton/HoopSpotColSkeleton';
+import Link from 'next/link';
+import LeaveButton from '../button/LeaveButton';
+import AddButton from '../button/AddButton';
 import HoopSessionImageCard from '../card/HoopSessionImageCard';
-import {ResponseFactory} from '../../interfaces/ResponseFactory';
+import HoopSpotColSkeleton from '../skeleton/HoopSpotColSkeleton';
 
-
-type HoopSessionstSectionProps = {
+type HoopSessionPageProps = {
     hoopSession: HoopSession
 }
 
-dayjs.extend(localizedFormat);
-
-const HoopSessionSection: FunctionComponent<HoopSessionstSectionProps> = (props) => {
+const HoopSessionPage: FunctionComponent<HoopSessionPageProps> = (props) => {
     const {user} = useContext(UserContext);
     const router = useRouter();
     const [searchInput, setSearchInput] = useState<string>('');
@@ -122,15 +118,15 @@ const HoopSessionSection: FunctionComponent<HoopSessionstSectionProps> = (props)
             <div className="container mx-auto py-8 px-4 md:px-0">
                 <div className="grid grid-cols-1 md:grid-cols-5 md:gap-6">
                     <div className="col-span-3">
-                        <img className="rounded-lg shadow-md w-full"
-                             alt={props.hoopSession.hoopspot?.name}
-                             src={props.hoopSession.hoopspot?.image}/>
+                        <img className="rounded-lg shadow-md max-h-96"
+                             alt={props.hoopSession.hoop_spot?.name}
+                             src={props.hoopSession.hoop_spot?.image}/>
                     </div>
                     <div className="col-span-2 relative">
                         <h4 className="tracking-tighter font-base text-lg md:text-xl text-primary">{dayjs(props.hoopSession.start_time).format('LL')}</h4>
                         <h1 className="tracking-wide font-extrabold text-2xl md:text-4xl">{dayjs(props.hoopSession.start_time).format('LT')} - {dayjs(props.hoopSession.end_time).format('LT')}</h1>
                         <div className="mt-3 text-gray-700 font-normal space-y-2">
-                            <a href={`http://maps.google.com/?q=${props.hoopSession.hoopspot?.full_address}`}
+                            <a href={`http://maps.google.com/?q=${props.hoopSession.hoop_spot?.full_address}`}
                                target="_blank"
                                className="flex underline text-sm md:text-md">
                                 {/* location icon */}
@@ -141,7 +137,7 @@ const HoopSessionSection: FunctionComponent<HoopSessionstSectionProps> = (props)
                                         d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
                                         clipRule="evenodd"/>
                                 </svg>
-                                {props.hoopSession.hoopspot?.full_address}
+                                {props.hoopSession.hoop_spot?.full_address}
                             </a>
 
                             <span className="flex text-sm md:text-md">
@@ -154,7 +150,7 @@ const HoopSessionSection: FunctionComponent<HoopSessionstSectionProps> = (props)
                                 {props.hoopSession.members?.length} &middot; {dayjs(props.hoopSession.start_time).isBefore(dayjs()) ? 'Attended' : 'Attending'}
                             </span>
 
-                            <Link href={`/hoopspot/${props.hoopSession.hoopspot?.slug}`}>
+                            <Link href={`/hoopspot/${props.hoopSession.hoop_spot?.slug}`}>
                                 <a className="flex underline text-sm md:text-md">
                                     {/* building icon */}
                                     <svg className="w-6 h-6 mr-1" fill="currentColor" viewBox="0 0 20 20"
@@ -163,7 +159,7 @@ const HoopSessionSection: FunctionComponent<HoopSessionstSectionProps> = (props)
                                               d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z"
                                               clipRule="evenodd"/>
                                     </svg>
-                                    {props.hoopSession.hoopspot?.name}
+                                    {props.hoopSession.hoop_spot?.name}
                                 </a>
                             </Link>
 
@@ -250,11 +246,11 @@ const HoopSessionSection: FunctionComponent<HoopSessionstSectionProps> = (props)
                         <div className="grid gap-5 justify-center items-center">
                             {
                                 nearbyHoopSessions.length > 0 ? nearbyHoopSessions.map(nearbyHoopSession => (
-                                    <Link href={`/hoopsession/${nearbyHoopSession.uuid}`} key={nearbyHoopSession.uuid}>
+                                    <a href={`/hoopsession/${nearbyHoopSession.uuid}`} key={nearbyHoopSession.uuid}>
                                         <div className="grid-row-1">
                                             <HoopSessionImageCard hoopSession={nearbyHoopSession}/>
                                         </div>
-                                    </Link>
+                                    </a>
                                 )): [...Array(6)].map((_i, index) => (
                                     <div className="grid-row-1" key={index}>
                                         <HoopSpotColSkeleton/>
@@ -269,4 +265,4 @@ const HoopSessionSection: FunctionComponent<HoopSessionstSectionProps> = (props)
     );
 };
 
-export default HoopSessionSection;
+export default HoopSessionPage;

@@ -1,6 +1,7 @@
 import DatabaseService from './DatabaseService';
 import axios, {AxiosResponse} from 'axios';
 import {ResponseFactory} from '../interfaces/ResponseFactory';
+import qs from 'qs';
 
 export class RestService {
 
@@ -20,7 +21,10 @@ export class RestService {
             headers: {
                 Authorization: 'Bearer ' + token
             },
-            params: params
+            params: params,
+            paramsSerializer: (params: any) => {
+                return qs.stringify(params, {arrayFormat: 'brackets'})
+            }
         };
 
         const route = `${process.env.NEXT_PUBLIC_API_URL}/${url}`;

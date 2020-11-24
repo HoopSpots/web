@@ -1,4 +1,4 @@
-# Hoop Spots 🏀📍
+# Hoop Spots
 
 ### Mission
 Find the best pickup basketball hoop sessions in real time using HoopSpots.

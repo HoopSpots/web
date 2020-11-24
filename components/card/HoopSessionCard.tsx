@@ -18,7 +18,7 @@ export class HoopSessionCard extends Component<MyProps, MyState> {
                     <div
                         className="h-full flex flex-col border max-w-sm rounded-tl-4xl rounded-br-5xl relative focus:outline-none mx-1">
                         <div className="w-full h-56 sm:h-64 bg-cover bg-center rounded rounded-tl-4xl"
-                             style={{backgroundImage: `url(${this.props.hoopSession.hoopspot?.image})`}}/>
+                             style={{backgroundImage: `url(${this.props.hoopSession.hoop_spot?.image})`}}/>
                         <div className="py-6 px-10">
                             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
                                 <h5 className="text-2xl font-bold truncate">
@@ -43,13 +43,13 @@ export class HoopSessionCard extends Component<MyProps, MyState> {
                                               d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z"
                                               clipRule="evenodd"/>
                                     </svg>
-                                    <span className="font-bold text-xs">{this.props.hoopSession.hoopspot?.name}</span>
+                                    <span className="font-bold text-xs">{this.props.hoopSession.hoop_spot?.name}</span>
                                 </div>
                             </div>
                             <div className="flex flex-col sm:flex-row mt-2 sm:mt-4">
                                 <div className="flex mt-2">
                                     <div className="flex flex-row-reverse justify-end mr-2">
-                                        {this.props.hoopSession.members?.map((user: User, index) => (
+                                        {this.props.hoopSession.first_five_attending?.map((user: User, index) => (
                                             // Show the first 5 members
                                             index < 5 ?
                                                 <span className="-mr-1" key={index + ' ' + user.uuid}>
@@ -60,7 +60,7 @@ export class HoopSessionCard extends Component<MyProps, MyState> {
                                         ))}
                                     </div>
                                     <div className="flex-1 font-base text-gray-600 text-sm">
-                                        {this.props.hoopSession.members?.length} people going
+                                        {this.props.hoopSession.members_count} people going
                                     </div>
                                 </div>
 

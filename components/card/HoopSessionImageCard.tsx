@@ -11,7 +11,7 @@ dayjs.extend(localizedFormat);
 const HoopSessionImageCard: FunctionComponent<HoopSessionImageCardProps> = (props) => {
     return (
         <div className="max-w-full md:max-w-xs rounded-lg overflow-hidden shadow-lg relative bg-black cursor-pointer transform hover:scale-105 transition duration-300 ease-in-out">
-            <img className="w-full h-56 object-cover opacity-50" src={props.hoopSession.hoopspot?.image} alt={props.hoopSession.hoopspot?.name} />
+            <img className="w-full h-56 object-cover opacity-50" src={props.hoopSession.hoop_spot?.image} alt={props.hoopSession.hoop_spot?.name} />
             <div className="px-6 py-4 absolute left-0 top-0">
                 <h6 className="font-semibold text-white tracking-tighter text-sm">{dayjs(props.hoopSession.start_time).format('LL')}</h6>
                 <h4 className="font-semibold text-white tracking-tighter text-lg">{dayjs(props.hoopSession.start_time).format('LT')} - {dayjs(props.hoopSession.end_time).format('LT')}</h4>
@@ -37,7 +37,7 @@ const HoopSessionImageCard: FunctionComponent<HoopSessionImageCardProps> = (prop
                             d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
                             clipRule="evenodd"/>
                     </svg>
-                    {props.hoopSession.hoopspot?.name}
+                    {props.hoopSession.hoop_spot?.name}
                 </p>
 
             </div>
