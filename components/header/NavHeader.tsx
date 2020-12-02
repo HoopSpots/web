@@ -89,9 +89,9 @@ const NavHeader: FunctionComponent = () => {
                         </button>
                     </div>
                     <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-                        <a className="flex-shrink-0 flex items-center md:mr-5" href="#">
-                            <img className="hidden lg:block h-8 w-auto"
-                                 src="https://tailwindui.com/img/logos/workflow-mark-on-white.svg" alt="Workflow logo"/>
+                        <a className="flex-shrink-0 flex items-center md:mr-5" href="/">
+                            <img className="hidden lg:block h-12 w-auto"
+                                 src="/logo.png" alt="HoopSpots logo"/>
                         </a>
                         <div className="hidden sm:ml-6 sm:flex">
                             <Link href="/">

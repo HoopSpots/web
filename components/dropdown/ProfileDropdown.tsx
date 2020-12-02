@@ -31,7 +31,7 @@ const ProfileDropdown: FunctionComponent<ProfileDropdownProps> = (props) => {
                 </button>
             </div>
             <div
-                className={`origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg transition ease-out duration-100 z-40 ${active ? "transform opacity-100 scale-100" : "transform opacity-0 scale-95"}`}>
+                className={`origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg transition ease-out duration-100 z-40 ${active ? "transform opacity-100 scale-100" : "transform opacity-0 scale-95 hidden"}`}>
                 <div className="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical"
                      aria-labelledby="user-menu">
                     <a href="#"

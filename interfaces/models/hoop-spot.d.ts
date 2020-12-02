@@ -19,4 +19,6 @@ type HoopSpot = {
 	full_address?: string
 	distance_away?: number
 	comments?: Commentable[];
+	members_count?: number;
+	hoop_sessions_count?: number;
 };

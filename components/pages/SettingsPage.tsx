@@ -1,12 +1,12 @@
 import React, {FunctionComponent, useContext, useEffect} from 'react';
+import UserContext from '../context/UserContext';
+import {useRouter} from 'next/router';
 import ProfileSettingsForm from '../form/ProfileSettingsForm';
 import Divider from '../divider/Divider';
 import PersonalSettingsForm from '../form/PersonalSettingsForm';
-import UserContext from '../context/UserContext';
 import NotificationSettingsForm from '../form/NotificationSettingsForm';
-import {useRouter} from 'next/router';
 
-const SettingsSection: FunctionComponent = () => {
+const SettingsPage: FunctionComponent = () => {
     const {isAuthenticated} = useContext(UserContext);
     const router = useRouter();
 
@@ -14,7 +14,7 @@ const SettingsSection: FunctionComponent = () => {
         if (isAuthenticated === false) {
             router.push(`/login?ref=${encodeURIComponent(window.location.href)}`);
         }
-    });
+    }, []);
 
     return (
         <section className="py-8 md:py-16 md:my-0 bg-accent h-full">
@@ -29,4 +29,4 @@ const SettingsSection: FunctionComponent = () => {
     );
 };
 
-export default SettingsSection;
+export default SettingsPage;

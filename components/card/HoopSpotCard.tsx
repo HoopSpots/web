@@ -47,7 +47,7 @@ export class HoopSpotCard extends Component<MyProps, MyState> {
                                         ))}
                                     </div>
                                     <div className="flex-1 font-base text-gray-600 text-sm">
-                                        {this.props.hoopSpot.members?.length} members
+                                        {this.props.hoopSpot.members_count} members
                                     </div>
                                 </div>
 
