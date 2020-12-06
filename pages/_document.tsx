@@ -5,9 +5,8 @@ export default class MyDocument extends Document {
         return (
             <Html>
                 <Head>
-                    {/* Global Site Tag (gtag.js) - Google Analytics */}
                     <script
-                        src={`/matomo.js`}
+                        src={`/segment.js`}
                     />
                 </Head>
                 <body>
