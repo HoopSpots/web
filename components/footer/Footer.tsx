@@ -57,7 +57,7 @@ export class Footer extends Component{
                     </p>
 
                     <p className="mt-4 text-center text-base leading-6 text-gray-400">
-                        &copy; 2020 HoopSpots. All rights reserved.
+                        &copy; {new Date().getFullYear()} HoopSpots. All rights reserved.
                     </p>
                 </div>
             </footer>
